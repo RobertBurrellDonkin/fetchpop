@@ -7,6 +7,7 @@ A personal app to archive messages from a POP email account. Includes workaround
 
 * Reduced boiler plate
 * Easy creation of executables
+* Advanced end to end tests with minimal boiler plate
 
 Cons that Don't Apply
 
