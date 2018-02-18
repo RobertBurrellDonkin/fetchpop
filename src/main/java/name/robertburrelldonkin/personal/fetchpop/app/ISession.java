@@ -30,8 +30,8 @@ import java.io.Reader;
  */
 interface ISession {
 
-    Reader readMessage(int someMessageNumber);
+    Reader retrieveMessage(int someMessageNumber);
 
-    Status currentStatus();
+    Status status();
 
 }

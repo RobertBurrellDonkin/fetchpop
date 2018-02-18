@@ -55,7 +55,7 @@ public class MessageTest {
     public void setUp() {
         this.someMessageNumber = nextInt();
         this.someInfo = new POP3MessageInfo(someMessageNumber, nextAlphanumeric());
-        when(this.mockSession.readMessage(someMessageNumber)).thenReturn(reader);
+        when(this.mockSession.retrieveMessage(someMessageNumber)).thenReturn(reader);
 
         this.subject = new Message(someInfo, mockSession);
     }
@@ -64,7 +64,7 @@ public class MessageTest {
     public void readShouldRetrieveMessageById() {
         this.subject.read();
 
-        verify(this.mockSession).readMessage(someMessageNumber);
+        verify(this.mockSession).retrieveMessage(someMessageNumber);
     }
 
     @Test

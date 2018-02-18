@@ -54,7 +54,7 @@ public class PrintStatusOperationTest {
 
     @Test
     public void operationShouldWriteStatus() {
-        when(this.session.currentStatus()).thenReturn(this.status);
+        when(this.session.status()).thenReturn(this.status);
 
         this.subject.operateOn(this.session);
 

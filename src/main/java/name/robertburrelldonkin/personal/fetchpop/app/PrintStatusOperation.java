@@ -36,6 +36,6 @@ class PrintStatusOperation implements IOperation {
 
     @Override
     public void operateOn(final ISession session) {
-        session.currentStatus().printTo(out);
+        session.status().printTo(out);
     }
 }

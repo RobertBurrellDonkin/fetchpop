@@ -1,5 +1,8 @@
 package name.robertburrelldonkin.personal.fetchpop.app;
 
+import static name.robertburrelldonkin.personal.fetchpop.app.ExitCode.LOGIN_REJECTED;
+import static name.robertburrelldonkin.personal.fetchpop.app.ExitCode.STATUS_MISSING;
+
 /*
 MIT License
 
@@ -26,6 +29,25 @@ SOFTWARE.
 import org.springframework.boot.ExitCodeGenerator;
 
 class FatalRuntimeException extends RuntimeException implements ExitCodeGenerator {
+
+    final static class LoginRejectedException extends FatalRuntimeException {
+    
+        private static final long serialVersionUID = -2487518389439340937L;
+    
+        public LoginRejectedException() {
+            super(LOGIN_REJECTED);
+        }
+    }
+
+    final static class MissingStatusException extends FatalRuntimeException {
+    
+        private static final long serialVersionUID = 1074390910212122532L;
+    
+        MissingStatusException() {
+            super(STATUS_MISSING);
+        }
+    
+    }
 
     private static final long serialVersionUID = -4972664000872524612L;
 

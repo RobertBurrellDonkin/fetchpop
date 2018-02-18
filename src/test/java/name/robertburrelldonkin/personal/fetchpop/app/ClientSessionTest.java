@@ -1,12 +1,15 @@
 package name.robertburrelldonkin.personal.fetchpop.app;
 
+import static name.robertburrelldonkin.personal.fetchpop.app.AlphaSequence.nextAlphanumeric;
 import static name.robertburrelldonkin.personal.fetchpop.app.NumberSequence.nextInt;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.net.SocketException;
 
 import org.apache.commons.net.pop3.POP3SClient;
 /*
@@ -41,7 +44,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class AuthorizedSessionTest {
+public class ClientSessionTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
@@ -49,49 +52,83 @@ public class AuthorizedSessionTest {
     private POP3SClient mockClient;
 
     private int someMessageNumber;
+    private String userName;
+    private String credentials;
+    private String hostName;
+    private int hostPort;
+
     @Mock
     private Reader mockReader;
 
-    private ISession subject;
+    private Client subject;
 
     @Before
     public void setUp() {
+        userName = nextAlphanumeric();
+        credentials = nextAlphanumeric();
+        hostName = nextAlphanumeric();
+        hostPort = nextInt();
+
         someMessageNumber = nextInt();
-        subject = new AuthorizedSession(mockClient);
+        subject = new Client(mockClient);
+    }
+
+    @Test
+    public void whenLoginFailsPerformShouldThrowException() throws SocketException, IOException {
+        when(mockClient.login(userName, credentials)).thenReturn(false);
+        thrown.expect(FatalRuntimeException.LoginRejectedException.class);
+
+        this.subject.login(userName, credentials);
+    }
+
+    @Test
+    public void whenConnectFailsPerformShouldThrowException() throws SocketException, IOException {
+        doThrow(new IOException()).when(mockClient).connect(hostName, hostPort);
+        thrown.expect(FatalNestedRuntimeException.ConnectionFailedException.class);
+
+        this.subject.connect(hostName, hostPort);
+    }
+
+    @Test
+    public void whenLoginThrowsExceptionPerformShouldThrowException() throws SocketException, IOException {
+        when(mockClient.login(userName, credentials)).thenThrow(new IOException());
+        thrown.expect(FatalNestedRuntimeException.LoginFailedException.class);
+
+        this.subject.login(userName, credentials);
     }
 
     @Test
     public void whenStatusFailsThenThrowException() throws IOException {
-        thrown.expect(AuthorizedSession.StatusException.class);
+        thrown.expect(FatalNestedRuntimeException.StatusException.class);
 
         when(mockClient.status()).thenThrow(new IOException());
 
-        this.subject.currentStatus();
+        this.subject.status();
     }
 
     @Test
     public void whenStatusIsNullThenThrowException() throws IOException {
-        thrown.expect(AuthorizedSession.MissingStatusException.class);
+        thrown.expect(FatalRuntimeException.MissingStatusException.class);
 
         when(mockClient.status()).thenReturn(null);
 
-        this.subject.currentStatus();
+        this.subject.status();
     }
 
     @Test
     public void readShouldRetrieveMessageFromMailbox() throws IOException {
         when(mockClient.retrieveMessage(someMessageNumber)).thenReturn(this.mockReader);
 
-        assertThat(this.subject.readMessage(someMessageNumber), is(this.mockReader));
+        assertThat(this.subject.retrieveMessage(someMessageNumber), is(this.mockReader));
 
     }
 
     @Test
     public void whenRetrieveMessageFailsThenThrowException() throws IOException {
         when(mockClient.retrieveMessage(someMessageNumber)).thenThrow(new IOException());
-        thrown.expect(AuthorizedSession.MessageRetrievalException.class);
+        thrown.expect(FatalNestedRuntimeException.MessageRetrievalException.class);
 
-        this.subject.readMessage(someMessageNumber);
+        this.subject.retrieveMessage(someMessageNumber);
 
     }
 }

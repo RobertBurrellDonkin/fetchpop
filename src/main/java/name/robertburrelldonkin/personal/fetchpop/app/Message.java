@@ -44,7 +44,7 @@ class Message {
     }
 
     public Reader read() {
-        return session.readMessage(info.number);
+        return session.retrieveMessage(info.number);
     }
 
     @Override
