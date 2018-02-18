@@ -1,4 +1,4 @@
-package name.robertburrelldonkin.fetchpop;
+package name.robertburrelldonkin.personal.fetchpop.app;
 
 import java.io.BufferedReader;
 import java.io.File;
