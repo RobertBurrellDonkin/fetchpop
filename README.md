@@ -17,6 +17,8 @@ Refactoring
 
 Applying copy then rewrite strategy; will port feature by feature with tests.
 
+Idea is to redevelop using TDD; 
+
 Wrinkles about testing, need to run a POP3 server; 
 
 #Context
