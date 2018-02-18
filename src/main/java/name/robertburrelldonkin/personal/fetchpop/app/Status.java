@@ -1,5 +1,8 @@
 package name.robertburrelldonkin.personal.fetchpop.app;
 
+import java.io.PrintWriter;
+
+import org.apache.commons.io.FileUtils;
 /*
 MIT License
 
@@ -44,4 +47,14 @@ final class Status {
         return numberOfMessages;
     }
 
+    @Override
+    public String toString() {
+        return "Status [messageBoxSizeInBytes=" + messageBoxSizeInBytes + ", numberOfMessages=" + numberOfMessages
+                + "]";
+    }
+
+    public void printTo(PrintWriter out) {
+        out.println("messages: " + getNumberOfMessages() + ", size: "
+                + FileUtils.byteCountToDisplaySize(getMessageBoxSizeInBytes()));
+    }
 }

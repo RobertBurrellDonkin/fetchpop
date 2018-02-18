@@ -23,15 +23,41 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import java.io.Reader;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-/**
- * A POP3 server session.
- */
-interface ISession {
+import java.io.PrintWriter;
 
-    Reader readMessage(int someMessageNumber);
+import org.apache.commons.net.pop3.POP3MessageInfo;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
-    Status currentStatus();
+@RunWith(MockitoJUnitRunner.class)
+public class PrintStatusOperationTest {
 
+    @Mock
+    private PrintWriter mockWriter;
+    @Mock
+    private ISession session;
+    private PrintStatusOperation subject;
+    private Status status;
+
+    @Before
+    public void setUp() throws Exception {
+        status = new Status(new POP3MessageInfo(12, 1024));
+
+        subject = new PrintStatusOperation(this.mockWriter);
+    }
+
+    @Test
+    public void operationShouldWriteStatus() {
+        when(this.session.currentStatus()).thenReturn(this.status);
+
+        this.subject.operateOn(this.session);
+
+        verify(mockWriter).println("messages: 12, size: 1 KB");
+    }
 }

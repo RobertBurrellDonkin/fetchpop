@@ -52,7 +52,7 @@ public class AuthorizedSessionTest {
     @Mock
     private Reader mockReader;
 
-    private AuthorizedSession subject;
+    private ISession subject;
 
     @Before
     public void setUp() {

@@ -1,4 +1,5 @@
 package name.robertburrelldonkin.personal.fetchpop.app;
+
 /*
 MIT License
 
@@ -22,16 +23,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+import java.io.PrintWriter;
 
-import java.io.Reader;
+class PrintStatusOperation implements IOperation {
 
-/**
- * A POP3 server session.
- */
-interface ISession {
+    private final PrintWriter out;
 
-    Reader readMessage(int someMessageNumber);
+    public PrintStatusOperation(final PrintWriter out) {
+        super();
+        this.out = out;
+    }
 
-    Status currentStatus();
-
+    @Override
+    public void operateOn(final ISession session) {
+        session.currentStatus().printTo(out);
+    }
 }

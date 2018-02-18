@@ -77,7 +77,8 @@ class AuthorizedSession implements ISession {
         }
     }
 
-    Status currentStatus() {
+    @Override
+    public Status currentStatus() {
         try {
             final POP3MessageInfo status = client.status();
             if (isNull(status)) {

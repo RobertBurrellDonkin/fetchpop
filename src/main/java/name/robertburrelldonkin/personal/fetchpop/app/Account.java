@@ -33,7 +33,7 @@ import org.apache.commons.net.pop3.POP3SClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-final class Account {
+class Account {
 
     final static class LoginRejectedException extends FatalRuntimeException {
 
