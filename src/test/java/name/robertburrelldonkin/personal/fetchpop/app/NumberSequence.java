@@ -23,14 +23,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import java.util.Random;
 
-@SpringBootApplication
-public class App {
+public class NumberSequence {
 
-    public static void main(String[] args) {
-        SpringApplication.run(App.class, args);
+    private static final Random random = new Random();
+
+    public static final int nextInt() {
+        return random.nextInt();
     }
-
 }

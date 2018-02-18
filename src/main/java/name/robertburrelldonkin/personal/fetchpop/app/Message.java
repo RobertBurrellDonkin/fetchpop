@@ -23,14 +23,32 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import java.io.Reader;
 
-@SpringBootApplication
-public class App {
+import org.apache.commons.net.pop3.POP3MessageInfo;
 
-    public static void main(String[] args) {
-        SpringApplication.run(App.class, args);
+/**
+ * <p>
+ * A message stored in a POP3 server.
+ * </p>
+ */
+class Message {
+
+    private final POP3MessageInfo info;
+    private final ISession session;
+
+    public Message(final POP3MessageInfo info, final ISession session) {
+        super();
+        this.info = info;
+        this.session = session;
     }
 
+    public Reader read() {
+        return session.readMessage(info.number);
+    }
+
+    @Override
+    public String toString() {
+        return "Message [" + info + "]";
+    }
 }
