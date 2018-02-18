@@ -46,10 +46,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class FetchpopApplication {
+public class App {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FetchpopApplication.class, args);
+		SpringApplication.run(App.class, args);
 	}
 
 	private final String username = "USERNAME";
