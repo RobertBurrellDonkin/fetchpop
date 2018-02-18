@@ -77,6 +77,7 @@ class Account {
     }
 
     public void perform(final POP3SClient client, final IOperation operation) {
+        logger.info("Opening connection to perform {}", operation);
         connect(client);
         try {
             login(client);
@@ -88,6 +89,7 @@ class Account {
         } finally {
             disconnect(client);
         }
+        logger.info("Completed {} and terminated session", operation);
     }
 
     private void logout(final POP3SClient client) {
