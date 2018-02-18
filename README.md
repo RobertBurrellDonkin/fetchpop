@@ -1,6 +1,18 @@
 # fetchpop
 A personal app to archive messages from a POP email account. Includes workarounds for thousands of messages.
 
+# Implementation
+
+## Why Spring Boot...? 
+
+* Reduced boiler plate
+* Easy creation of executables
+
+Cons that Don't Apply
+
+* More dependencies
+* Bigger executable
+
 #Context
 
 ##My Itch
