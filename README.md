@@ -22,6 +22,8 @@ Idea is to redevelop using TDD;
 
 Wrinkles about testing, need to run a POP3 server; 
 
+expection handling -> fine grained 
+
 #Context
 
 ##My Itch
