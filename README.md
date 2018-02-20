@@ -7,12 +7,50 @@ Refactoring into a test-driven object-oriented application guided by end to end 
 
 ## Use Cases
 
-Well, none yet. Will arrive in due course.
+## GH-5 Set Account Details 
+
+> As a User
+>
+> I want To Set Account Details
 
 ## Key Technologies
 
 * <a href='https://commons.apache.org/proper/commons-net/' rel='tag'>Apache Commons Net</a> 
 * <a href='https://projects.spring.io/spring-boot/' rel=tag>Spring Boot</a>
+
+## Configuration
+
+Spring Boot standard application properties. Users are encouraged to use custom profiles.
+
+### Example Command Line
+
+```java -jar -Dapplication.user="POP3 User" -Dapplication.cred="POP3 passwd" -Dapplication.host.name="POP3 Server Host Name" -Dapplication.host.port=999 fetchpop-app-0.0.1-SNAPSHOT.jar```
+
+### Example YAML
+
+Save 
+
+```
+application:
+  user: me@example.org
+  cred: ABCDEF
+  host: 
+    name: pop3.example.org
+    port: 999
+```
+as ```config/account.yml```
+
+Then run 
+
+```
+java -jar -Dspring.profiles.active="account" fetchpop-app-0.0.1-SNAPSHOT.jar
+```
+
+## Features And Fixes
+
+### 0.0.1 
+
+* GH-5 As a User I want To Set Account Details
 
 ## Rationale 
 
