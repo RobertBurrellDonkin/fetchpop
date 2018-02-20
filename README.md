@@ -5,12 +5,6 @@ A personal app to automate bulk operations on a <a href='https://tools.ietf.org/
 
 Refactoring into a test-driven object-oriented application guided by end to end tests from a legacy script.
 
-## A Note
-
-This is a personal app. Made by me, for me to scratch a personal itch. Make of it what you will. 
-
-Please don't expect me to undertake unpaid development on it for you. 
-
 ## Use Cases
 
 Well, none yet. Will arrive in due course.
@@ -54,6 +48,11 @@ But the James FetchPop implementation has known limitations. Would need a comple
 
 This app throws finely grained exceptions to allow precise diagnosis even at statistical scale. Probably a little much but the habit's good.
 
+## A Little Note
+
+This is a personal app. Made by me, for me to scratch a personal itch. Make of it what you will. 
+
+Please don't expect me to undertake unpaid development on it for you. 
 
 
 
