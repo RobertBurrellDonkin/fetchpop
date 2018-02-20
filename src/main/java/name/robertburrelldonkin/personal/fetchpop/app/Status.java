@@ -1,6 +1,6 @@
 package name.robertburrelldonkin.personal.fetchpop.app;
 
-import java.io.PrintWriter;
+import java.io.PrintStream;
 
 import org.apache.commons.io.FileUtils;
 /*
@@ -53,7 +53,7 @@ final class Status {
                 + "]";
     }
 
-    public void printTo(PrintWriter out) {
+    public void printTo(PrintStream out) {
         out.println("messages: " + getNumberOfMessages() + ", size: "
                 + FileUtils.byteCountToDisplaySize(getMessageBoxSizeInBytes()));
     }

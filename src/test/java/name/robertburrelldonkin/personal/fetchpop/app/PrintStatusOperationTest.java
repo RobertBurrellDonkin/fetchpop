@@ -26,7 +26,7 @@ SOFTWARE.
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.io.PrintWriter;
+import java.io.PrintStream;
 
 import org.apache.commons.net.pop3.POP3MessageInfo;
 import org.junit.Before;
@@ -39,7 +39,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 public class PrintStatusOperationTest {
 
     @Mock
-    private PrintWriter mockWriter;
+    private PrintStream mockStream;
     @Mock
     private ISession session;
     private PrintStatusOperation subject;
@@ -49,7 +49,7 @@ public class PrintStatusOperationTest {
     public void setUp() throws Exception {
         status = new Status(new POP3MessageInfo(12, 1024));
 
-        subject = new PrintStatusOperation(this.mockWriter);
+        subject = new PrintStatusOperation(this.mockStream);
     }
 
     @Test
@@ -58,6 +58,6 @@ public class PrintStatusOperationTest {
 
         this.subject.operateOn(this.session);
 
-        verify(mockWriter).println("messages: 12, size: 1 KB");
+        verify(mockStream).println("messages: 12, size: 1 KB");
     }
 }
