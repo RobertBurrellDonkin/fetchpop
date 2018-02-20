@@ -27,6 +27,7 @@ import static name.robertburrelldonkin.personal.fetchpop.app.AlphaSequence.nextA
 import static name.robertburrelldonkin.personal.fetchpop.app.NumberSequence.nextInt;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.argThat;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.when;
@@ -70,6 +71,51 @@ public class AccountTest {
         subject = new Account(userName, credentials, hostName, hostPort);
 
         when(mockClient.verify()).thenReturn(mockClient);
+    }
+
+    @Test
+    public void whenAllSetThenAccountIsNotEmpty() {
+        assertThat(subject.isEmpty(), is(false));
+    }
+
+    @Test
+    public void whenUserIsEmptyStringThenAccountIsEmpty() {
+        assertThat(new Account("", credentials, hostName, hostPort).isEmpty(), is(true));
+    }
+
+    @Test
+    public void whenUserIsNullThenAccountIsEmpty() {
+        assertThat(new Account(null, credentials, hostName, hostPort).isEmpty(), is(true));
+    }
+
+    @Test
+    public void whenCredIsEmptyStringThenAccountIsEmpty() {
+        assertThat(new Account(userName, "", hostName, hostPort).isEmpty(), is(true));
+    }
+
+    @Test
+    public void whenCredIsNullThenAccountIsEmpty() {
+        assertThat(new Account(userName, null, hostName, hostPort).isEmpty(), is(true));
+    }
+
+    @Test
+    public void whenHostNameIsEmptyStringThenAccountIsEmpty() {
+        assertThat(new Account(userName, credentials, "", hostPort).isEmpty(), is(true));
+    }
+
+    @Test
+    public void whenHostNameIsNullThenAccountIsEmpty() {
+        assertThat(new Account(userName, credentials, null, hostPort).isEmpty(), is(true));
+    }
+
+    @Test
+    public void whenHostPortIsZeroThenAccountIsEmpty() {
+        assertThat(new Account(userName, credentials, hostName, 0).isEmpty(), is(true));
+    }
+
+    @Test
+    public void whenHostPortIsNegativeThenAccountIsEmpty() {
+        assertThat(new Account(userName, credentials, hostName, -1).isEmpty(), is(true));
     }
 
     @Test
