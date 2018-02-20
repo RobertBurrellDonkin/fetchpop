@@ -36,9 +36,9 @@ In this case I'm relaxed about
 
 For many years, I ran a local personal fork of <a href='https://james.apache.org/'>Apache James</a>. Key features
 
-* Efficiently serve over IMAP mail originally delivered to many accounts beyond the limits of clients like Thunderbird to cache locally;
+* Efficiently serve over <a href='https://tools.ietf.org/html/rfc3501'>IMAP</a> mail originally delivered to many accounts beyond the limits of clients like Thunderbird to cache locally;
 * Full access to archives even when machine is offline;
-* Advanced filtering using SIEVE;
+* Advanced filtering using <a href='https://www.ietf.org/rfc/rfc3028.txt'>SIEVE</a>;
 * Portability, able to zip and relocate;
 * Mail accessed via POP3
 
