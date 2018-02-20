@@ -75,7 +75,7 @@ public class AccountTest {
 
     @Test
     public void whenAllSetThenAccountIsNotEmpty() {
-        assertThat(subject.isEmpty(), is(false));
+        assertThat(new Account(userName, credentials, hostName, hostPort).isEmpty(), is(false));
     }
 
     @Test
