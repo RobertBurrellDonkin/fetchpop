@@ -11,5 +11,4 @@ public class App {
     public static void main(String[] args) {
         System.exit(exit(run(App.class, args)));
     }
-
 }
