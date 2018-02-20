@@ -9,7 +9,10 @@ Refactoring into a test-driven object-oriented application guided by end to end 
 
 Well, none yet. Will arrive in due course.
 
-##
+## Key Technologies
+
+* <a href='https://commons.apache.org/proper/commons-net/' rel='tag'>Apache Commons Net</a> 
+* <a href='https://projects.spring.io/spring-boot/' rel=tag>Spring Boot</a>
 
 ## Rationale 
 
