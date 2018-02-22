@@ -1,8 +1,5 @@
 package name.robertburrelldonkin.personal.fetchpop.app;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-
 /*
 MIT License
 
@@ -26,6 +23,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
