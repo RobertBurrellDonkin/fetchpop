@@ -1,5 +1,7 @@
 # FetchPop
-A personal app to automate bulk operations on a <a href='https://tools.ietf.org/html/rfc1939' rel=tag>POP3</a> email account. 
+A personal app to automate bulk operations on a <a href='https://tools.ietf.org/html/rfc1939' rel=tag>POP3</a> email account.
+
+Under <a href='https://opensource.org/licenses/MIT' rel='license'>MIT License</a>.
 
 ## State Of Play
 
