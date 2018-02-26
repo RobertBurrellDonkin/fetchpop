@@ -1,5 +1,4 @@
 package name.robertburrelldonkin.personal.fetchpop.app;
-
 /*
 MIT License
 
@@ -23,16 +22,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-import static org.springframework.boot.SpringApplication.exit;
-import static org.springframework.boot.SpringApplication.run;
 
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
 
-@SpringBootApplication
-public class App {
+public class StandardOutput {
 
-    public static void main(String[] args) {
-        System.exit(exit(run(App.class, args)));
-    }
-
+    public static final Marker STDOUT_MARKER = MarkerFactory.getMarker("std.out");
+    public static final Marker STDERR_MARKER = MarkerFactory.getMarker("std.err");
 }
