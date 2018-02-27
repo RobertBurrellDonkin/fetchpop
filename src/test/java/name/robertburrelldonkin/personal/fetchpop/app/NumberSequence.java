@@ -1,5 +1,7 @@
 package name.robertburrelldonkin.personal.fetchpop.app;
 
+import static java.lang.Math.abs;
+
 /*
 MIT License
 
@@ -31,5 +33,10 @@ public class NumberSequence {
 
     public static final int nextInt() {
         return random.nextInt();
+    }
+
+    public static final int nextPositiveInt() {
+        final int result = abs(nextInt());
+        return result > 0 ? result : nextPositiveInt();
     }
 }

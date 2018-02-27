@@ -9,7 +9,14 @@ Refactoring into a test-driven object-oriented application guided by end to end 
 
 ## Use Cases
 
-## <a href='https://github.com/RobertBurrellDonkin/fetchpop/issues/5'>GH-1</a> Quiet Profile
+## <a href='https://github.com/RobertBurrellDonkin/fetchpop/issues/2'>GH-2</a> Operation - Print Status
+
+> When I perform a PrintStatusOperation
+> Then the number of messages and message box size should be output
+
+Output should be printed main logger. See Quiet Profile.
+
+## <a href='https://github.com/RobertBurrellDonkin/fetchpop/issues/1'>GH-1</a> Quiet Profile
 
 > As a User
 >

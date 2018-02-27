@@ -24,7 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 import static name.robertburrelldonkin.personal.fetchpop.app.AlphaSequence.nextAlphanumeric;
-import static name.robertburrelldonkin.personal.fetchpop.app.NumberSequence.nextInt;
+import static name.robertburrelldonkin.personal.fetchpop.app.NumberSequence.nextPositiveInt;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
@@ -66,7 +66,7 @@ public class AccountTest {
         userName = nextAlphanumeric();
         credentials = nextAlphanumeric();
         hostName = nextAlphanumeric();
-        hostPort = nextInt();
+        hostPort = nextPositiveInt();
 
         subject = new Account(userName, credentials, hostName, hostPort);
 

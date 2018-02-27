@@ -28,6 +28,7 @@ import static org.apache.commons.codec.digest.DigestUtils.sha1Hex;
 import static org.apache.commons.lang.ArrayUtils.EMPTY_CHAR_ARRAY;
 import static org.apache.commons.lang.StringUtils.isBlank;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -53,7 +54,7 @@ class Account {
             @Value("${application.host.port:995}") final int hostPort) {
         super();
         this.userName = userName;
-        this.credentials = nonNull(credentials) ? credentials.toCharArray().clone()
+        this.credentials = nonNull(credentials) ? ArrayUtils.clone(credentials.toCharArray())
                 /* cloning prevent concurrent zeroing */ : EMPTY_CHAR_ARRAY;
         this.hostName = hostName;
         this.hostPort = hostPort;
