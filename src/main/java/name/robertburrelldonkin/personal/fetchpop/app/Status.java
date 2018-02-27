@@ -1,5 +1,7 @@
 package name.robertburrelldonkin.personal.fetchpop.app;
 
+import static org.apache.commons.io.FileUtils.byteCountToDisplaySize;
+
 /*
 MIT License
 
@@ -47,14 +49,18 @@ final class Status {
         return numberOfMessages;
     }
 
-    @Override
-    public String toString() {
-        return "Status [messageBoxSizeInBytes=" + messageBoxSizeInBytes + ", numberOfMessages=" + numberOfMessages
-                + "]";
-    }
-
     public void printTo(PrintStream out) {
         out.println("messages: " + getNumberOfMessages() + ", size: "
                 + FileUtils.byteCountToDisplaySize(getMessageBoxSizeInBytes()));
+    }
+
+    public String getMessageBoxDisplaySize() {
+        return byteCountToDisplaySize(getMessageBoxSizeInBytes());
+    }
+
+    @Override
+    public String toString() {
+        return "Status [getMessageBoxSizeInBytes()=" + getMessageBoxSizeInBytes() + ", getNumberOfMessages()="
+                + getNumberOfMessages() + ", getMessageBoxDisplaySize()=" + getMessageBoxDisplaySize() + "]";
     }
 }
