@@ -1,5 +1,28 @@
 package name.robertburrelldonkin.personal.fetchpop.app;
 
+/*
+MIT License
+
+Copyright (c) 2018 Robert Burrell Donkin
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
 import static name.robertburrelldonkin.personal.fetchpop.app.ExitCode.CONNECTION_FAILED;
 import static name.robertburrelldonkin.personal.fetchpop.app.ExitCode.LOGIN_FAILED;
 import static name.robertburrelldonkin.personal.fetchpop.app.ExitCode.RETREIVE_MESSAGE_CALL_FAILED;
@@ -36,16 +59,16 @@ import org.springframework.core.NestedRuntimeException;
 class FatalNestedRuntimeException extends NestedRuntimeException implements ExitCodeGenerator {
     final static class ConnectionFailedException extends FatalNestedRuntimeException {
         private static final long serialVersionUID = -2617040595479379258L;
-    
+
         public ConnectionFailedException(final IOException cause) {
             super(CONNECTION_FAILED, cause);
         }
     }
 
     final static class LoginFailedException extends FatalNestedRuntimeException {
-    
+
         private static final long serialVersionUID = 8751903558629536749L;
-    
+
         public LoginFailedException(final IOException cause) {
             super(LOGIN_FAILED, cause);
         }
@@ -53,7 +76,7 @@ class FatalNestedRuntimeException extends NestedRuntimeException implements Exit
 
     final static class MessageRetrievalException extends FatalNestedRuntimeException {
         private static final long serialVersionUID = -2617040595479379258L;
-    
+
         public MessageRetrievalException(final IOException cause) {
             super(RETREIVE_MESSAGE_CALL_FAILED, cause);
         }
@@ -61,7 +84,7 @@ class FatalNestedRuntimeException extends NestedRuntimeException implements Exit
 
     final static class StatusException extends FatalNestedRuntimeException {
         private static final long serialVersionUID = 5024769660178592258L;
-    
+
         public StatusException(final IOException cause) {
             super(STATUS_CALL_FAILED, cause);
         }

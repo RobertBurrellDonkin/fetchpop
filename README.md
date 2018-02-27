@@ -1,5 +1,7 @@
 # FetchPop
-A personal app to automate bulk operations on a <a href='https://tools.ietf.org/html/rfc1939' rel=tag>POP3</a> email account. 
+A personal app to automate bulk operations on a <a href='https://tools.ietf.org/html/rfc1939' rel=tag>POP3</a> email account.
+
+Under <a href='https://opensource.org/licenses/MIT' rel='license'>MIT License</a>.
 
 ## State Of Play
 
@@ -7,12 +9,70 @@ Refactoring into a test-driven object-oriented application guided by end to end 
 
 ## Use Cases
 
-Well, none yet. Will arrive in due course.
+## <a href='https://github.com/RobertBurrellDonkin/fetchpop/issues/2'>GH-2</a> Operation - Print Status
+
+> When I perform a PrintStatusOperation
+> Then the number of messages and message box size should be output
+
+Output should be printed main logger. See Quiet Profile.
+
+## <a href='https://github.com/RobertBurrellDonkin/fetchpop/issues/1'>GH-1</a> Quiet Profile
+
+> As a User
+>
+> I want a profile consistent with UNIX output standards
+
+By default, FetchPop is Spring-Boots-esque and logs to console. 
+
+Activate profile `quiet` to suppress 
+
+Implemented using <a href='https://logback.qos.ch/' rel='tag'>Logback</a> markers.
+
+## <a href='https://github.com/RobertBurrellDonkin/fetchpop/issues/5'>GH-5</a> Set Account Details 
+
+> As a User
+>
+> I want To Set Account Details
 
 ## Key Technologies
 
 * <a href='https://commons.apache.org/proper/commons-net/' rel='tag'>Apache Commons Net</a> 
 * <a href='https://projects.spring.io/spring-boot/' rel=tag>Spring Boot</a>
+
+## Configuration
+
+Spring Boot standard application properties. Users are encouraged to use custom profiles.
+
+### Example Command Line
+
+```java -jar -Dapplication.user="POP3 User" -Dapplication.cred="POP3 passwd" -Dapplication.host.name="POP3 Server Host Name" -Dapplication.host.port=999 fetchpop-app-0.0.1-SNAPSHOT.jar```
+
+### Example YAML
+
+Save 
+
+```
+application:
+  user: me@example.org
+  cred: ABCDEF
+  host: 
+    name: pop3.example.org
+    port: 999
+```
+as ```config/account.yml```
+
+Then run 
+
+```
+java -jar -Dspring.profiles.active="account" fetchpop-app-0.0.1-SNAPSHOT.jar
+```
+
+## Features And Fixes
+
+### 0.0.1 
+
+* GH-1 Add Main Logger
+* GH-5 As a User I want To Set Account Details
 
 ## Rationale 
 

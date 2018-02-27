@@ -24,5 +24,9 @@
 
 logging:
  level:
-  org.apache: debug
+  org.apache: info
   org.springframework: info
+  
+spring:
+    main:
+        banner-mode: "off"

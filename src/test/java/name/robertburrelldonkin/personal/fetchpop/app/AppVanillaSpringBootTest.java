@@ -1,9 +1,5 @@
 package name.robertburrelldonkin.personal.fetchpop.app;
 
-import static name.robertburrelldonkin.personal.fetchpop.app.StandardOutput.STDOUT_MARKER;
-
-import org.slf4j.Logger;
-
 /*
 MIT License
 
@@ -27,18 +23,35 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
-class PrintStatusOperation implements IOperation {
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
-    private final Logger logger;
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class AppVanillaSpringBootTest {
 
-    public PrintStatusOperation(final Logger logger) {
-        super();
-        this.logger = logger;
+    private static final int CONVENTIONAL_SECURE_POP3_PORT = 995;
+    @Autowired
+    Account account;
+
+    @Test
+    public void whenProfileIsDefaultThenAccountIsEmpty() {
+        assertThat(account.isEmpty(), is(true));
     }
 
-    @Override
-    public void operateOn(final ISession session) {
-        this.logger.info(STDOUT_MARKER, "{}", session.status());
+    @Test
+    public void whenProfileIsDefaultThenHostPortDefaults() {
+        assertThat(account.getHostPort(), is(CONVENTIONAL_SECURE_POP3_PORT));
     }
+
+    @Test
+    public void smoke() {
+    }
+
 }

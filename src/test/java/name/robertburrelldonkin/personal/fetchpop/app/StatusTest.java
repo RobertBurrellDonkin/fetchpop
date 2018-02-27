@@ -24,6 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 import static name.robertburrelldonkin.personal.fetchpop.app.NumberSequence.nextInt;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -58,5 +59,27 @@ public class StatusTest {
     @Test
     public void numberOfMessages() {
         assertThat(this.subject.getNumberOfMessages(), is(someNumberOfMessages));
+    }
+
+    @Test
+    public void messageBoxDisplaySize() {
+        assertThat(new Status(new POP3MessageInfo(someNumberOfMessages, 20001230)).getMessageBoxDisplaySize(),
+                is("19 MB"));
+    }
+
+    @Test
+    public void toStringReturnsMessageBoxDisplaySize() {
+        assertThat(new Status(new POP3MessageInfo(someNumberOfMessages, 20001230)).toString(), containsString("19 MB"));
+    }
+
+    @Test
+    public void toStringReturnsMessageBoxSize() {
+        assertThat(new Status(new POP3MessageInfo(someNumberOfMessages, 20001230)).toString(),
+                containsString("20001230"));
+    }
+
+    @Test
+    public void toStringReturnsNumberOfMessages() {
+        assertThat(new Status(new POP3MessageInfo(2345, 20001230)).toString(), containsString("2345"));
     }
 }

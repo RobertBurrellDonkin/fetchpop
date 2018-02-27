@@ -1,9 +1,4 @@
 package name.robertburrelldonkin.personal.fetchpop.app;
-
-import static name.robertburrelldonkin.personal.fetchpop.app.StandardOutput.STDOUT_MARKER;
-
-import org.slf4j.Logger;
-
 /*
 MIT License
 
@@ -28,17 +23,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-class PrintStatusOperation implements IOperation {
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
 
-    private final Logger logger;
+public class StandardOutput {
 
-    public PrintStatusOperation(final Logger logger) {
-        super();
-        this.logger = logger;
-    }
-
-    @Override
-    public void operateOn(final ISession session) {
-        this.logger.info(STDOUT_MARKER, "{}", session.status());
-    }
+    public static final Marker STDOUT_MARKER = MarkerFactory.getMarker("std.out");
+    public static final Marker STDERR_MARKER = MarkerFactory.getMarker("std.err");
 }

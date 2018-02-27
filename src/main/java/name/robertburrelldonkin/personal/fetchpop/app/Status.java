@@ -1,8 +1,7 @@
 package name.robertburrelldonkin.personal.fetchpop.app;
 
-import java.io.PrintWriter;
+import static org.apache.commons.io.FileUtils.byteCountToDisplaySize;
 
-import org.apache.commons.io.FileUtils;
 /*
 MIT License
 
@@ -26,6 +25,9 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+import java.io.PrintStream;
+
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.net.pop3.POP3MessageInfo;
 
 final class Status {
@@ -47,14 +49,18 @@ final class Status {
         return numberOfMessages;
     }
 
-    @Override
-    public String toString() {
-        return "Status [messageBoxSizeInBytes=" + messageBoxSizeInBytes + ", numberOfMessages=" + numberOfMessages
-                + "]";
-    }
-
-    public void printTo(PrintWriter out) {
+    public void printTo(PrintStream out) {
         out.println("messages: " + getNumberOfMessages() + ", size: "
                 + FileUtils.byteCountToDisplaySize(getMessageBoxSizeInBytes()));
+    }
+
+    public String getMessageBoxDisplaySize() {
+        return byteCountToDisplaySize(getMessageBoxSizeInBytes());
+    }
+
+    @Override
+    public String toString() {
+        return "Status [getMessageBoxSizeInBytes()=" + getMessageBoxSizeInBytes() + ", getNumberOfMessages()="
+                + getNumberOfMessages() + ", getMessageBoxDisplaySize()=" + getMessageBoxDisplaySize() + "]";
     }
 }
