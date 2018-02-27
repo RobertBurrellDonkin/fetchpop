@@ -1,5 +1,7 @@
 # FetchPop
-A personal app to automate bulk operations on a <a href='https://tools.ietf.org/html/rfc1939' rel=tag>POP3</a> email account. 
+A personal app to automate bulk operations on a <a href='https://tools.ietf.org/html/rfc1939' rel=tag>POP3</a> email account.
+
+Under <a href='https://opensource.org/licenses/MIT' rel='license'>MIT License</a>.
 
 ## State Of Play
 
@@ -7,7 +9,19 @@ Refactoring into a test-driven object-oriented application guided by end to end 
 
 ## Use Cases
 
-## GH-5 Set Account Details 
+## <a href='https://github.com/RobertBurrellDonkin/fetchpop/issues/5'>GH-1</a> Quiet Profile
+
+> As a User
+>
+> I want a profile consistent with UNIX output standards
+
+By default, FetchPop is Spring-Boots-esque and logs to console. 
+
+Activate profile `quiet` to suppress 
+
+Implemented using <a href='https://logback.qos.ch/' rel='tag'>Logback</a> markers.
+
+## <a href='https://github.com/RobertBurrellDonkin/fetchpop/issues/5'>GH-5</a> Set Account Details 
 
 > As a User
 >
@@ -50,6 +64,7 @@ java -jar -Dspring.profiles.active="account" fetchpop-app-0.0.1-SNAPSHOT.jar
 
 ### 0.0.1 
 
+* GH-1 Add Main Logger
 * GH-5 As a User I want To Set Account Details
 
 ## Rationale 

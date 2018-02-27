@@ -22,9 +22,11 @@
 # SOFTWARE.
 #
 
-application:
-  user: me@example.org
-  cred: ABCDEF
-  host: 
-    name: pop3.example.org
-    port: 999
+logging:
+ level:
+  org.apache: info
+  org.springframework: info
+  
+spring:
+    main:
+        banner-mode: "off"

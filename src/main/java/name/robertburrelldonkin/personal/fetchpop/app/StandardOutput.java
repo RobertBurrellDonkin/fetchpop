@@ -1,5 +1,4 @@
 package name.robertburrelldonkin.personal.fetchpop.app;
-
 /*
 MIT License
 
@@ -23,35 +22,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-public class AppVanillaSpringBootTest {
+public class StandardOutput {
 
-    private static final int CONVENTIONAL_SECURE_POP3_PORT = 995;
-    @Autowired
-    Account account;
-
-    @Test
-    public void whenProfileIsDefaultThenAccountIsEmpty() {
-        assertThat(account.isEmpty(), is(true));
-    }
-
-    @Test
-    public void whenProfileIsDefaultThenHostPortDefaults() {
-        assertThat(account.getHostPort(), is(CONVENTIONAL_SECURE_POP3_PORT));
-    }
-
-    @Test
-    public void smoke() {
-    }
-
+    public static final Marker STDOUT_MARKER = MarkerFactory.getMarker("std.out");
+    public static final Marker STDERR_MARKER = MarkerFactory.getMarker("std.err");
 }
