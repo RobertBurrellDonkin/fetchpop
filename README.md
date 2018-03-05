@@ -34,6 +34,13 @@ Implemented using <a href='https://logback.qos.ch/' rel='tag'>Logback</a> marker
 >
 > I want To Set Account Details
 
+## <a href='https://github.com/RobertBurrellDonkin/fetchpop/issues/4'>GH-4</a> Debug Low Level Commands 
+
+> As a Diagnoser of Problems
+> I want to see low level communication
+
+Apache Commons Net supports listening for low level communications. These messages are printed to the special logger named "protocol". 
+
 ## Key Technologies
 
 * <a href='https://commons.apache.org/proper/commons-net/' rel='tag'>Apache Commons Net</a> 

@@ -48,6 +48,7 @@ class Client implements ISession {
 
     public Client(final POP3SClient client) {
         this.pop3Client = client;
+        client.addProtocolCommandListener(new LoggingProtocolCommandListener());
     }
 
     public void logout() {
