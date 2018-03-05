@@ -26,10 +26,8 @@ SOFTWARE.
 import static java.util.Objects.isNull;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.Reader;
 
-import org.apache.commons.net.PrintCommandListener;
 import org.apache.commons.net.pop3.POP3MessageInfo;
 import org.apache.commons.net.pop3.POP3SClient;
 import org.slf4j.Logger;
@@ -50,8 +48,7 @@ class Client implements ISession {
 
     public Client(final POP3SClient client) {
         this.pop3Client = client;
-        // TODO: debug
-        client.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out), true));
+        client.addProtocolCommandListener(new LoggingProtocolCommandListener());
     }
 
     public void logout() {
