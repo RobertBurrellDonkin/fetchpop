@@ -3,6 +3,8 @@ A personal app to automate bulk operations on a <a href='https://tools.ietf.org/
 
 Under <a href='https://opensource.org/licenses/MIT' rel='license'>MIT License</a>.
 
+There's more on the <a href='https://github.com/RobertBurrellDonkin/fetchpop/wiki'>wiki</a>.
+
 ## State Of Play
 
 Refactoring into a test-driven object-oriented application guided by end to end tests from a legacy script.
