@@ -1,9 +1,12 @@
 package name.robertburrelldonkin.personal.fetchpop.app;
 
-import static name.robertburrelldonkin.personal.fetchpop.app.StandardOutput.STDOUT_MARKER;
+import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.stereotype.Component;
 
 /*
 MIT License
@@ -29,21 +32,36 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-class PrintStatusOperation implements IOperation {
+@Component
+class OperationRunner implements ApplicationRunner {
 
-    private final Logger logger;
+    private final Logger logger = LoggerFactory.getLogger(OperationRunner.class);
+    private final Account account;
 
-    public PrintStatusOperation() {
-        this(LoggerFactory.getLogger(PrintStatusOperation.class));
-    }
-
-    public PrintStatusOperation(final Logger logger) {
+    public OperationRunner(final Account account) {
         super();
-        this.logger = logger;
+        this.account = account;
     }
 
     @Override
-    public void operateOn(final ISession session) {
-        this.logger.info(STDOUT_MARKER, "{}", session.status());
+    public void run(ApplicationArguments args) throws Exception {
+        logger.info("Running operations {}", args.getNonOptionArgs());
+
+        args.getNonOptionArgs().stream().map(name -> toOperation(name)).filter(Objects::nonNull)
+                .forEach(op -> perform(op));
+    }
+
+    private void perform(final IOperation op) {
+        logger.info("Performing {}", op);
+
+        account.perform(new Client(), op);
+    }
+
+    private IOperation toOperation(String name) {
+        switch (name) {
+        case "status":
+            return new PrintStatusOperation();
+        }
+        throw new IllegalArgumentException("Unknown opertion " + name);
     }
 }
