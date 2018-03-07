@@ -23,17 +23,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import java.io.Reader;
-import java.util.List;
+class PrintMessageInfo implements IOperation {
 
-/**
- * A POP3 server session.
- */
-interface ISession {
+    @Override
+    public void operateOn(final ISession session) {
+        session.list().forEach(message -> message.logInfo());
+    }
 
-    Reader retrieveMessage(int someMessageNumber);
-
-    Status status();
-
-    List<Message> list();
 }

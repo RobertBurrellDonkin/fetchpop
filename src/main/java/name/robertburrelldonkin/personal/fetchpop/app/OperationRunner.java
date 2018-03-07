@@ -61,6 +61,8 @@ class OperationRunner implements ApplicationRunner {
         switch (name) {
         case "status":
             return new PrintStatusOperation();
+        case "info":
+            return new PrintMessageInfo();
         }
         throw new IllegalArgumentException("Unknown opertion " + name);
     }

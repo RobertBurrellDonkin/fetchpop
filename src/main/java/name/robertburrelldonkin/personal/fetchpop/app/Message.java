@@ -1,5 +1,9 @@
 package name.robertburrelldonkin.personal.fetchpop.app;
 
+import static name.robertburrelldonkin.personal.fetchpop.app.StandardOutput.STDOUT_MARKER;
+
+import java.io.BufferedReader;
+import java.io.IOException;
 /*
 MIT License
 
@@ -24,8 +28,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 import java.io.Reader;
+import java.util.Locale;
 
 import org.apache.commons.net.pop3.POP3MessageInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>
@@ -33,6 +40,8 @@ import org.apache.commons.net.pop3.POP3MessageInfo;
  * </p>
  */
 class Message {
+
+    private final Logger logger = LoggerFactory.getLogger(Message.class);
 
     private final POP3MessageInfo info;
     private final ISession session;
@@ -47,8 +56,34 @@ class Message {
         return session.retrieveMessage(info.number);
     }
 
+    final void logInfo() {
+        final BufferedReader reader = new BufferedReader(read());
+        String from = "";
+        String subject = "";
+        String line;
+        try {
+            while ((line = reader.readLine()) != null) {
+                String lower = line.toLowerCase(Locale.ENGLISH);
+                if (lower.startsWith("from: ")) {
+                    from = line.substring(6).trim();
+                } else if (lower.startsWith("subject: ")) {
+                    subject = line.substring(9).trim();
+                }
+            }
+        } catch (IOException e) {
+            throw new FatalNestedRuntimeException.MessageRetrievalException(e);
+        }
+
+        this.logger.info(STDOUT_MARKER, "MESSAGE #{} From:{} Subject:{}", Integer.toString(getId()), from, subject);
+    }
+
+    private int getId() {
+        return info.number;
+    }
+
     @Override
     public String toString() {
         return "Message [" + info + "]";
     }
+
 }

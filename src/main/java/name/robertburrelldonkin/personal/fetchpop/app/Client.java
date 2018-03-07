@@ -24,9 +24,12 @@ SOFTWARE.
 */
 
 import static java.util.Objects.isNull;
+import static java.util.stream.Collectors.toList;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.List;
+import java.util.stream.Stream;
 
 import org.apache.commons.net.pop3.POP3MessageInfo;
 import org.apache.commons.net.pop3.POP3SClient;
@@ -115,5 +118,14 @@ class Client implements ISession {
     public ISession verify() {
         status();
         return this;
+    }
+
+    @Override
+    public List<Message> list() {
+        try {
+            return Stream.of(this.pop3Client.listMessages()).map(info -> new Message(info, this)).collect(toList());
+        } catch (IOException e) {
+            throw new FatalNestedRuntimeException.MessageRetrievalException(e);
+        }
     }
 }
