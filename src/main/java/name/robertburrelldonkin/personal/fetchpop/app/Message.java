@@ -1,8 +1,13 @@
 package name.robertburrelldonkin.personal.fetchpop.app;
 
+import static name.robertburrelldonkin.personal.fetchpop.app.ExitCode.DOWNLOAD_FAILURE;
 import static name.robertburrelldonkin.personal.fetchpop.app.StandardOutput.STDOUT_MARKER;
+import static org.apache.commons.io.IOUtils.closeQuietly;
+import static org.apache.commons.io.IOUtils.copyLarge;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 /*
 MIT License
@@ -84,6 +89,26 @@ class Message {
     @Override
     public String toString() {
         return "Message [" + info + "]";
+    }
+
+    void downloadTo(final File file) {
+        this.logger.info("Downloading {} into {}", this, file.getAbsolutePath());
+        try {
+            final FileWriter writer = new FileWriter(file);
+            final Reader reader = read();
+            try {
+                copyLarge(reader, writer);
+            } catch (IOException e) {
+                // TODO error handling
+                throw new FatalNestedRuntimeException(DOWNLOAD_FAILURE, e);
+            } finally {
+                closeQuietly(reader);
+                closeQuietly(writer);
+            }
+        } catch (IOException e) {
+            // TODO error handling
+            throw new FatalNestedRuntimeException(DOWNLOAD_FAILURE, e);
+        }
     }
 
 }

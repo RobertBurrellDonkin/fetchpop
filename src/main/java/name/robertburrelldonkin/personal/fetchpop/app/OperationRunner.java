@@ -37,10 +37,14 @@ class OperationRunner implements ApplicationRunner {
 
     private final Logger logger = LoggerFactory.getLogger(OperationRunner.class);
     private final Account account;
+    private final Download download;
+    private final ClientFactory factory;
 
-    public OperationRunner(final Account account) {
+    public OperationRunner(final Account account, final Download download, final ClientFactory factory) {
         super();
         this.account = account;
+        this.download = download;
+        this.factory = factory;
     }
 
     @Override
@@ -54,7 +58,7 @@ class OperationRunner implements ApplicationRunner {
     private void perform(final IOperation op) {
         logger.info("Performing {}", op);
 
-        account.perform(new Client(), op);
+        account.perform(factory.setUpClient(), op);
     }
 
     private IOperation toOperation(String name) {
@@ -63,7 +67,9 @@ class OperationRunner implements ApplicationRunner {
             return new PrintStatusOperation();
         case "info":
             return new PrintMessageInfo();
+        case "download":
+            return download;
         }
-        throw new IllegalArgumentException("Unknown opertion " + name);
+        throw new IllegalArgumentException("Unknown operation " + name);
     }
 }

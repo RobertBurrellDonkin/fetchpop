@@ -25,32 +25,39 @@ SOFTWARE.
 
 import static java.util.Objects.isNull;
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Stream.of;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
-import java.util.stream.Stream;
 
 import org.apache.commons.net.pop3.POP3MessageInfo;
 import org.apache.commons.net.pop3.POP3SClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 /**
  * Adapts and specialises Apache Commons POP3 client.
  */
+@Component
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 class Client implements ISession {
 
     private final Logger logger = LoggerFactory.getLogger(Client.class);
 
+    private final long sessionLimit;
     private final POP3SClient pop3Client;
 
-    public Client() {
-        this(new POP3SClient(true));
+    public Client(final long sessionLimit) {
+        this(new POP3SClient(true), sessionLimit);
     }
 
-    public Client(final POP3SClient client) {
+    public Client(final POP3SClient client, final long sessionLimit) {
         this.pop3Client = client;
+        this.sessionLimit = sessionLimit;
         client.addProtocolCommandListener(new LoggingProtocolCommandListener());
     }
 
@@ -122,8 +129,10 @@ class Client implements ISession {
 
     @Override
     public List<Message> list() {
+        logger.info("Limited messages listed to {}", sessionLimit);
         try {
-            return Stream.of(this.pop3Client.listMessages()).map(info -> new Message(info, this)).collect(toList());
+            return of(this.pop3Client.listMessages()).map(info -> new Message(info, this)).limit(sessionLimit)
+                    .collect(toList());
         } catch (IOException e) {
             throw new FatalNestedRuntimeException.MessageRetrievalException(e);
         }

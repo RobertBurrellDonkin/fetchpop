@@ -23,6 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+import static java.lang.Long.MAX_VALUE;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Matchers.argThat;
@@ -45,7 +46,7 @@ public class ClientTest {
 
     @Before
     public void setUp() throws Exception {
-        this.subject = new Client(this.mockPop3);
+        this.subject = new Client(this.mockPop3, MAX_VALUE);
     }
 
     @Test

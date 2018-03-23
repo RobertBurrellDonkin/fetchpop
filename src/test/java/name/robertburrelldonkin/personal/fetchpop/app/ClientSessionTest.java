@@ -1,5 +1,6 @@
 package name.robertburrelldonkin.personal.fetchpop.app;
 
+import static java.lang.Long.MAX_VALUE;
 /*
 MIT License
 
@@ -93,7 +94,7 @@ public class ClientSessionTest {
         hostPort = nextInt();
 
         someMessageNumber = nextInt();
-        subject = new Client(mockClient);
+        subject = new Client(mockClient, MAX_VALUE);
     }
 
     @Test
