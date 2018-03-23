@@ -44,20 +44,21 @@ class OperationRunner implements ApplicationRunner {
     }
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(final ApplicationArguments args) throws Exception {
         logger.info("Running operations {}", args.getNonOptionArgs());
+        final Context context = Context.aCommandLineContext(new Arguments(args)).build();
 
         args.getNonOptionArgs().stream().map(name -> toOperation(name)).filter(Objects::nonNull)
-                .forEach(op -> perform(op));
+                .forEach(op -> perform(op, context));
     }
 
-    private void perform(final IOperation op) {
-        logger.info("Performing {}", op);
+    private void perform(final IOperation op, final Context context) {
+        logger.info("Performing {} in context {}", op, context);
 
         account.perform(new Client(), op);
     }
 
-    private IOperation toOperation(String name) {
+    private IOperation toOperation(final String name) {
         switch (name) {
         case "status":
             return new PrintStatusOperation();
