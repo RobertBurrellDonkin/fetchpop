@@ -20,7 +20,7 @@
 
    <groupId>name.robertburrelldonkin.personal.fetchpop</groupId>
    <artifactId>fetchpop-app</artifactId>
-   <version>0.0.2-SNAPSHOT</version>
+   <version>0.0.2</version>
    <packaging>jar</packaging>
 
    <name>fetchpop</name>
