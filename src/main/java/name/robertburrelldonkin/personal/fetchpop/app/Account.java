@@ -29,6 +29,7 @@ import static org.apache.commons.lang.ArrayUtils.EMPTY_CHAR_ARRAY;
 import static org.apache.commons.lang.StringUtils.isBlank;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +49,7 @@ class Account {
     private final String hostName;
     private final int hostPort;
 
-    public Account(@Value("${application.user:}") final String userName,
+    Account(@Value("${application.user:}") final String userName,
             @Value("${application.cred:}") final String credentials,
             @Value("${application.host.name:}") final String hostName,
             @Value("${application.host.port:995}") final int hostPort) {
@@ -59,6 +60,12 @@ class Account {
         this.hostName = hostName;
         this.hostPort = hostPort;
         logger.info("Account { user: {}, host: { name: {}, port: {} } }", userName, hostName, hostPort);
+        if (isBlank(hostName)) {
+            logger.warn("Expected host name to be set but was not. Connecting may fail.");
+        }
+        if (isBlank(userName)) {
+            logger.warn("Expected user name to be set but was not. Connecting may fail.");
+        }
     }
 
     public String digestCredentialsAsSHA() {
