@@ -56,6 +56,11 @@ public class App implements ApplicationRunner {
         final List<String> operationNames = args.getNonOptionArgs();
         if (operationNames.isEmpty()) {
             logger.warn("No operations to execute. Pass operation names by the command line.");
+        } else {
+            operationNames
+                    .stream()
+                    .map(OperationFactory::nameToOperation)
+                    .forEachOrdered(this.account::perform);
         }
 
         logger.info("Completed FetchPop. Bye.", args);

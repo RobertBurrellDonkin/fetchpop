@@ -88,6 +88,10 @@ class Account {
         return this.hostPort;
     }
 
+    void perform(final IOperation operation) {
+        perform(new Client(), operation);
+    }
+
     public void perform(final Client client, final IOperation operation) {
         logger.info("Opening connection to perform {}", operation);
         client.connect(this.hostName, this.hostPort);

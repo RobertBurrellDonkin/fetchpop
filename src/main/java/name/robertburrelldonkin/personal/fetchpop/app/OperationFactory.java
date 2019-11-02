@@ -1,9 +1,4 @@
 package name.robertburrelldonkin.personal.fetchpop.app;
-
-import static name.robertburrelldonkin.personal.fetchpop.app.StandardOutput.STDOUT_MARKER;
-
-import org.slf4j.Logger;
-
 /*
 MIT License
 
@@ -28,22 +23,24 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-class PrintStatusOperation implements IOperation {
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-    private final Logger logger;
+import static java.lang.String.format;
 
-    public PrintStatusOperation(final Logger logger) {
-        super();
-        this.logger = logger;
-    }
+class OperationFactory {
 
-    @Override
-    public void operateOn(final ISession session) {
-        this.logger.info(STDOUT_MARKER, "{}", session.status());
-    }
+    private static final Logger logger = LoggerFactory.getLogger(OperationFactory.class);
 
-    @Override
-    public String toString() {
-        return "PrintStatusOperation";
+    private static final String STATUS_OP_NAME = "status";
+
+    static IOperation nameToOperation(final String name) {
+        switch(name.toLowerCase()) {
+            case STATUS_OP_NAME:
+                return new PrintStatusOperation(LoggerFactory.getLogger(PrintStatusOperation.class));
+            default:
+                logger.error("'{}' is not a known operation.", name);
+                throw new IllegalArgumentException(format("Unknown operation: %s", name));
+        }
     }
 }
