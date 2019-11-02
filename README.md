@@ -11,6 +11,16 @@ Refactoring into a test-driven object-oriented application guided by end to end 
 
 ## Use Cases
 
+### <a href='https://github.com/RobertBurrellDonkin/fetchpop/issues/1'>GH-14</a> Debug Profile
+
+> As a User
+>
+> I want a profile with full debugging logs
+
+Activate profile `debug` to log debugging to console
+
+```java -jar -Dspring.profiles.active="debug" fetchpop-app-0.0.1-SNAPSHOT.jar```
+
 ## <a href='https://github.com/RobertBurrellDonkin/fetchpop/issues/2'>GH-2</a> Operation - Print Status
 
 > When I perform a PrintStatusOperation
