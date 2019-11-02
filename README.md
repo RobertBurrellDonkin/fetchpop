@@ -78,7 +78,7 @@ application:
     name: pop3.example.org
     port: 999
 ```
-as ```config/account.yml```
+as ```config/application-account.yml```
 
 Then run 
 
