@@ -9,6 +9,20 @@ There's more on the <a href='https://github.com/RobertBurrellDonkin/fetchpop/wik
 
 Refactoring into a test-driven object-oriented application guided by end to end tests from a legacy script.
 
+## Usage Notes
+
+Based around the idea of a series of operations. Each operation is an isolated session. 
+
+Pass the name of the operation on the command line as no-argument options. For example
+
+```java -jar ~/source/fetchpop/target/fetchpop-app-0.0.3-SNAPSHOT.jar status```
+
+### Operations
+
+| Name | Function |
+|-------|------------|
+| status | Connects to the POP3 server, asks for status and then logs to console. |
+
 ## Use Cases
 
 ### <a href='https://github.com/RobertBurrellDonkin/fetchpop/issues/1'>GH-14</a> Debug Profile
