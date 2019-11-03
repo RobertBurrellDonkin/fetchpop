@@ -102,6 +102,19 @@ java -jar -Dspring.profiles.active="account" fetchpop-app-0.0.1-SNAPSHOT.jar
 
 ## Features And Fixes
 
+Just pre-releases for personal use.
+
+### 0.0.3
+
+ *  GH-25: Spring boot console app with status
+ *  GH-23: Upgrade to Spring Boot 2
+ *  GH-21: Warn when account data not set
+
+### 0.0.2
+ * GH-19 Add Debug Profile
+ * GH-4 Debug protocol comms
+ * GH-2 Status command
+
 ### 0.0.1 
 
 * GH-1 Add Main Logger
