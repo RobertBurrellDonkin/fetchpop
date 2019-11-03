@@ -24,15 +24,45 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 import static org.springframework.boot.SpringApplication.exit;
-import static org.springframework.boot.SpringApplication.run;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.List;
+
 @SpringBootApplication
-public class App {
+public class App implements ApplicationRunner {
+
+    private final Logger logger = LoggerFactory.getLogger(App.class);
 
     public static void main(String[] args) {
-        System.exit(exit(run(App.class, args)));
+        System.exit(exit(SpringApplication.run(App.class, args)));
     }
 
+    private final Account account;
+
+    public App(final Account account) {
+        this.account = account;
+    }
+
+    @Override
+    public void run(ApplicationArguments args) {
+        logger.info("Running FetchPop...");
+
+        final List<String> operationNames = args.getNonOptionArgs();
+        if (operationNames.isEmpty()) {
+            logger.warn("No operations to execute. Pass operation names by the command line.");
+        } else {
+            operationNames
+                    .stream()
+                    .map(OperationFactory::nameToOperation)
+                    .forEachOrdered(this.account::perform);
+        }
+
+        logger.info("Completed FetchPop. Bye.", args);
+    }
 }

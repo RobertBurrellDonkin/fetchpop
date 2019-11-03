@@ -26,3 +26,6 @@ logging:
  level:
   org.apache: debug
   org.springframework: info
+spring:
+ main:
+  web-application-type: none
