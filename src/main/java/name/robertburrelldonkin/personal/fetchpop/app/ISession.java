@@ -24,6 +24,7 @@ SOFTWARE.
 */
 
 import java.io.Reader;
+import java.util.stream.Stream;
 
 /**
  * A POP3 server session.
@@ -34,4 +35,5 @@ interface ISession {
 
     Status status();
 
+    Stream<Message> messages();
 }

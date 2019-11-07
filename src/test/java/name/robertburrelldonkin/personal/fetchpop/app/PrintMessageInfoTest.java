@@ -1,5 +1,4 @@
 package name.robertburrelldonkin.personal.fetchpop.app;
-
 /*
 MIT License
 
@@ -24,44 +23,37 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.net.pop3.POP3MessageInfo;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
-import java.io.BufferedReader;
-import java.io.Reader;
 import java.util.stream.Stream;
 
-/**
- * <p>
- * A message stored in a POP3 server.
- * </p>
- */
-class Message {
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
+public class PrintMessageInfoTest {
 
-    private final POP3MessageInfo info;
-    private final ISession session;
+    private PrintMessageInfo subject;
+    @Mock
+    private ISession mockSession;
+    @Mock
+    private Message mockMessage;
 
-    Message(final POP3MessageInfo info, final ISession session) {
-        super();
-        this.info = info;
-        this.session = session;
+    @Before
+    public void setUp() {
+        subject = new PrintMessageInfo();
     }
 
-    Reader read() {
-        return session.retrieveMessage(info.number);
-    }
+    @Test
+    public void operateOn() {
+        when(this.mockSession.messages()).thenReturn(Stream.of(mockMessage));
 
-    @Override
-    public String toString() {
-        return "Message [" + info + "]";
-    }
+        this.subject.operateOn(mockSession);
 
-    void logInfo() {
-
-    }
-
-    Stream<String> headerLines() {
-        return new BufferedReader(read()).lines().takeWhile(StringUtils::isNotBlank);
+        verify(this.mockMessage).logInfo();
     }
 }

@@ -23,15 +23,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import static java.util.Objects.isNull;
-
-import java.io.IOException;
-import java.io.Reader;
-
 import org.apache.commons.net.pop3.POP3MessageInfo;
 import org.apache.commons.net.pop3.POP3SClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.util.stream.Stream;
+
+import static java.util.Objects.isNull;
 
 /**
  * Adapts and specialises Apache Commons POP3 client.
@@ -42,16 +43,16 @@ class Client implements ISession {
 
     private final POP3SClient pop3Client;
 
-    public Client() {
+    Client() {
         this(new POP3SClient(true));
     }
 
-    public Client(final POP3SClient client) {
+    Client(final POP3SClient client) {
         this.pop3Client = client;
         client.addProtocolCommandListener(new LoggingProtocolCommandListener());
     }
 
-    public void logout() {
+    void logout() {
         try {
             if (!pop3Client.logout()) {
                 logger.warn("Continuing after failing to logout from session.");
@@ -61,7 +62,7 @@ class Client implements ISession {
         }
     }
 
-    public void disconnect() {
+    void disconnect() {
         try {
             logger.info("Disconnecting session");
             pop3Client.disconnect();
@@ -70,7 +71,7 @@ class Client implements ISession {
         }
     }
 
-    public void connect(final String hostName, final int hostPort) {
+    void connect(final String hostName, final int hostPort) {
         try {
             logger.info("Connecting to host {} port {}...", hostName, hostPort);
             pop3Client.connect(hostName, hostPort);
@@ -79,7 +80,7 @@ class Client implements ISession {
         }
     }
 
-    public void login(final String userName, final String credentials) {
+    void login(final String userName, final String credentials) {
         try {
             logger.info("Logging in as '{}'...", userName);
             if (!pop3Client.login(userName, credentials)) {
@@ -112,8 +113,13 @@ class Client implements ISession {
         }
     }
 
-    public ISession verify() {
+    ISession verify() {
         status();
         return this;
+    }
+
+    @Override
+    public Stream<Message> messages() {
+        return null;
     }
 }
