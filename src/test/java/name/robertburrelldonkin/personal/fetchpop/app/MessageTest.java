@@ -53,6 +53,17 @@ public class MessageTest {
                     "This is a message just to say hello.\r\n" +
                     "So, \"Hello\".\r\n";
 
+    private static final String FOLDED_EMAIL =
+            "From: John Doe <jdoe@machine.example>\r\n" +
+                    "To: Mary Smith <mary@example.net>\r\n" +
+                    "Subject: This\n" +
+                    "            is a test\n" +
+                    "Date: Fri, 21 Nov 1997 09:55:06 -0600\r\n" +
+                    "Message-ID: <1234@local.machine.example>\r\n" +
+                    "\r\n" +
+                    "This is a message just to say hello.\r\n" +
+                    "So, \"Hello\".\r\n";
+
     @Mock
     private Reader reader;
     @Mock
@@ -84,6 +95,20 @@ public class MessageTest {
     }
 
     @Test
+    public void headerFolding() {
+        when(this.mockSession.retrieveMessage(someMessageNumber)).thenReturn(new StringReader(FOLDED_EMAIL));
+
+        assertThat(this.subject.headerLines())
+                .containsExactly(
+                        "From: John Doe <jdoe@machine.example>",
+                        "To: Mary Smith <mary@example.net>",
+                        "Subject: This is a test",
+                        "Date: Fri, 21 Nov 1997 09:55:06 -0600",
+                        "Message-ID: <1234@local.machine.example>"
+                );
+    }
+
+    @Test
     public void headerLines() {
         when(this.mockSession.retrieveMessage(someMessageNumber)).thenReturn(new StringReader(SAMPLE_EMAIL));
 
@@ -96,6 +121,7 @@ public class MessageTest {
                         "Message-ID: <1234@local.machine.example>"
                 );
     }
+
 
     @Test
     public void headerName() {

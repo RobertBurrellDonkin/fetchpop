@@ -29,15 +29,14 @@ import org.apache.commons.net.pop3.POP3MessageInfo;
 
 import java.io.BufferedReader;
 import java.io.Reader;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Stream;
 
+import static java.lang.Character.isSpaceChar;
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableCollection;
 import static org.apache.commons.lang.StringUtils.substringBefore;
+import static org.apache.commons.lang.StringUtils.trim;
 
 /**
  * <p>
@@ -71,7 +70,31 @@ class Message {
     }
 
     Stream<String> headerLines() {
-        return new BufferedReader(read()).lines().takeWhile(StringUtils::isNotBlank);
+        final StringBuilder current = new StringBuilder(1024);
+        final List<String> accumulator = new ArrayList<>();
+        new BufferedReader(read()).lines().takeWhile(StringUtils::isNotBlank).forEach(
+                l -> {
+                    if (isSpaceChar(l.codePointAt(0))) {
+                        // Folded continuation of last header
+                        current.append(' '); // normalize white space
+                        current.append(trim(l));
+                    } else {
+                        // New header
+                        if (current.length() > 0) {
+                            // Accumulate current before moving on
+                            accumulator.add(current.toString());
+                            current.setLength(0);
+                        }
+                        current.append(l);
+                    }
+                }
+        );
+        // Last time
+        if (current.length() > 0) {
+            // Accumulate current before moving on
+            accumulator.add(current.toString());
+        }
+        return accumulator.stream();
     }
 
     String headerName(final String line) {
