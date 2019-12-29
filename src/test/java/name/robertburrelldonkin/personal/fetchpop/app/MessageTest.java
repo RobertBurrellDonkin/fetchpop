@@ -96,4 +96,21 @@ public class MessageTest {
                         "Message-ID: <1234@local.machine.example>"
                 );
     }
+
+    @Test
+    public void headerName() {
+        assertThat(this.subject.headerName("From: John Doe <jdoe@machine.example>")).isEqualTo("From");
+    }
+
+    @Test
+    public void info() {
+        when(this.mockSession.retrieveMessage(someMessageNumber)).thenReturn(new StringReader(SAMPLE_EMAIL));
+
+        assertThat(this.subject.info())
+                .containsExactly(
+                        "From: John Doe <jdoe@machine.example>",
+                        "Subject: Saying Hello",
+                        "Message-ID: <1234@local.machine.example>"
+                );
+    }
 }

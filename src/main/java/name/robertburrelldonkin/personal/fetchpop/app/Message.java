@@ -29,7 +29,15 @@ import org.apache.commons.net.pop3.POP3MessageInfo;
 
 import java.io.BufferedReader;
 import java.io.Reader;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Set;
 import java.util.stream.Stream;
+
+import static java.util.Arrays.asList;
+import static java.util.Collections.unmodifiableCollection;
+import static org.apache.commons.lang.StringUtils.substringBefore;
 
 /**
  * <p>
@@ -38,6 +46,7 @@ import java.util.stream.Stream;
  */
 class Message {
 
+    private final static Collection<String> INFO_HEADERS = unmodifiableCollection(asList("from", "subject", "message-id"));
 
     private final POP3MessageInfo info;
     private final ISession session;
@@ -63,5 +72,13 @@ class Message {
 
     Stream<String> headerLines() {
         return new BufferedReader(read()).lines().takeWhile(StringUtils::isNotBlank);
+    }
+
+    String headerName(final String line) {
+        return substringBefore(line, ":");
+    }
+
+    Stream<String> info() {
+        return headerLines().filter(l -> INFO_HEADERS.contains(headerName(l).toLowerCase()));
     }
 }
