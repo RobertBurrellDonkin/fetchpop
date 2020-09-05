@@ -17,4 +17,14 @@ class OperationFactoryTest {
     void nameToOperationWhenStatusUppercase() {
         assertThat(OperationFactory.nameToOperation("STATUS")).isInstanceOf(PrintStatusOperation.class);
     }
+
+    @Test
+    void nameToOperationWhenInfo() {
+        assertThat(OperationFactory.nameToOperation("info")).isInstanceOf(PrintMessageInfo.class);
+    }
+
+    @Test
+    void nameToOperationWhenInfoUppercase() {
+        assertThat(OperationFactory.nameToOperation("INFO")).isInstanceOf(PrintMessageInfo.class);
+    }
 }

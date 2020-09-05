@@ -33,9 +33,12 @@ class OperationFactory {
     private static final Logger logger = LoggerFactory.getLogger(OperationFactory.class);
 
     private static final String STATUS_OP_NAME = "status";
+    private static final String INFO_OP_NAME = "info";
 
     static IOperation nameToOperation(final String name) {
         switch(name.toLowerCase()) {
+            case INFO_OP_NAME:
+                return new PrintMessageInfo();
             case STATUS_OP_NAME:
                 return new PrintStatusOperation(LoggerFactory.getLogger(PrintStatusOperation.class));
             default:
