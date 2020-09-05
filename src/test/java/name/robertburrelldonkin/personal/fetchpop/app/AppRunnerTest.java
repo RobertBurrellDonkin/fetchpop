@@ -57,6 +57,16 @@ public class AppRunnerTest {
         verify(mockAccount).perform(isA(PrintStatusOperation.class));
     }
 
+
+    @Test
+    public void whenInfoOperationThenCallAccount() {
+        when(args.getNonOptionArgs()).thenReturn(singletonList("info"));
+
+        this.subject.run(args);
+
+        verify(mockAccount).perform(isA(PrintMessageInfo.class));
+    }
+
     @Test
     public void whenBogusOperationInListThenThrowException() {
         when(args.getNonOptionArgs()).thenReturn(asList("status", "bogus"));
