@@ -111,6 +111,31 @@ A profile has been set up called `smoke` which allows Status (for example) to be
 
 ```mvn spring-boot:run -Dspring-boot.run.profiles=smoke,debug -Dspring-boot.run.arguments=Status```
 
+## <a href='https://github.com/RobertBurrellDonkin/fetchpop/issues/29'>GH-29</a> Print Message Info
+
+This fetches header information for messages and prints key headers to standard output.
+
+**Sample Use Cases**
+ * Assess the contents of a mailbox before archiving 
+
+For example
+
+```
+mvn spring-boot:run -Dspring-boot.run.profiles=smoke,quiet -Dspring-boot.run.arguments=Info
+```
+
+might output
+
+```
+From: John Doe <jdoe@machine.example> Message-ID: <1234@local.machine.example> Subject: Saying Hello
+From: "Joe Q. Public" <john.q.public@example.com> Message-ID: <5678.21-Nov-1997@example.com>
+From: Pete <pete@silly.example> Message-ID: <testabcd.1234@silly.example>
+From: Mary Smith <mary@example.net> Message-ID: <3456@example.net> Subject: Re: Saying Hello
+```
+
+
+
+
 ## Key Technologies
 
 * <a href='https://commons.apache.org/proper/commons-net/' rel='tag'>Apache Commons Net</a> 
@@ -149,6 +174,7 @@ java -jar -Dspring.profiles.active="account" fetchpop-app-0.0.1-SNAPSHOT.jar
 Just pre-releases for personal use.
 
 ### Next Release
+ *  GH-28: Print Message Info 
  *  GH-29: Docker POP3 smoke server
  *  GH-30: Allow plain connections through configuration
 
