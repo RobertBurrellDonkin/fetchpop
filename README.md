@@ -67,6 +67,22 @@ Implemented using <a href='https://logback.qos.ch/' rel='tag'>Logback</a> marker
 
 Apache Commons Net supports listening for low level communications. These messages are printed to the special logger named "protocol". 
 
+## <a href='https://github.com/RobertBurrellDonkin/fetchpop/issues/30'>GH-30</a> Plain Text
+
+To enable smoke testing and edge cases, setting `application.host.tls` to false will force plain 
+text connection.
+
+```
+application:
+  user: alice
+  cred: Rabbit
+  host:
+    name: localhost
+    port: 110
+    tls: false
+```
+
+
 ## Key Technologies
 
 * <a href='https://commons.apache.org/proper/commons-net/' rel='tag'>Apache Commons Net</a> 
@@ -103,6 +119,9 @@ java -jar -Dspring.profiles.active="account" fetchpop-app-0.0.1-SNAPSHOT.jar
 ## Features And Fixes
 
 Just pre-releases for personal use.
+
+### Next Release
+ *  GH-30: Allow plain connections through configuration
 
 ### 0.0.3
 

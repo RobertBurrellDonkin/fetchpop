@@ -68,54 +68,54 @@ public class AccountTest {
         hostName = nextAlphanumeric();
         hostPort = nextPositiveInt();
 
-        subject = new Account(userName, credentials, hostName, hostPort);
+        subject = new Account(userName, credentials, hostName, hostPort, true);
 
         when(mockClient.verify()).thenReturn(mockClient);
     }
 
     @Test
     public void whenAllSetThenAccountIsNotEmpty() {
-        assertThat(new Account(userName, credentials, hostName, hostPort).isEmpty(), is(false));
+        assertThat(new Account(userName, credentials, hostName, hostPort, true).isEmpty(), is(false));
     }
 
     @Test
     public void whenUserIsEmptyStringThenAccountIsEmpty() {
-        assertThat(new Account("", credentials, hostName, hostPort).isEmpty(), is(true));
+        assertThat(new Account("", credentials, hostName, hostPort, true).isEmpty(), is(true));
     }
 
     @Test
     public void whenUserIsNullThenAccountIsEmpty() {
-        assertThat(new Account(null, credentials, hostName, hostPort).isEmpty(), is(true));
+        assertThat(new Account(null, credentials, hostName, hostPort, true).isEmpty(), is(true));
     }
 
     @Test
     public void whenCredIsEmptyStringThenAccountIsEmpty() {
-        assertThat(new Account(userName, "", hostName, hostPort).isEmpty(), is(true));
+        assertThat(new Account(userName, "", hostName, hostPort, true).isEmpty(), is(true));
     }
 
     @Test
     public void whenCredIsNullThenAccountIsEmpty() {
-        assertThat(new Account(userName, null, hostName, hostPort).isEmpty(), is(true));
+        assertThat(new Account(userName, null, hostName, hostPort, true).isEmpty(), is(true));
     }
 
     @Test
     public void whenHostNameIsEmptyStringThenAccountIsEmpty() {
-        assertThat(new Account(userName, credentials, "", hostPort).isEmpty(), is(true));
+        assertThat(new Account(userName, credentials, "", hostPort, true).isEmpty(), is(true));
     }
 
     @Test
     public void whenHostNameIsNullThenAccountIsEmpty() {
-        assertThat(new Account(userName, credentials, null, hostPort).isEmpty(), is(true));
+        assertThat(new Account(userName, credentials, null, hostPort, true).isEmpty(), is(true));
     }
 
     @Test
     public void whenHostPortIsZeroThenAccountIsEmpty() {
-        assertThat(new Account(userName, credentials, hostName, 0).isEmpty(), is(true));
+        assertThat(new Account(userName, credentials, hostName, 0, true).isEmpty(), is(true));
     }
 
     @Test
     public void whenHostPortIsNegativeThenAccountIsEmpty() {
-        assertThat(new Account(userName, credentials, hostName, -1).isEmpty(), is(true));
+        assertThat(new Account(userName, credentials, hostName, -1, true).isEmpty(), is(true));
     }
 
     @Test

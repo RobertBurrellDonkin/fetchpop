@@ -29,7 +29,6 @@ import static org.apache.commons.lang.ArrayUtils.EMPTY_CHAR_ARRAY;
 import static org.apache.commons.lang.StringUtils.isBlank;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,17 +47,21 @@ class Account {
     private final char[] credentials;
     private final String hostName;
     private final int hostPort;
+    private final boolean useTLS;
 
     Account(@Value("${application.user:}") final String userName,
             @Value("${application.cred:}") final String credentials,
             @Value("${application.host.name:}") final String hostName,
-            @Value("${application.host.port:995}") final int hostPort) {
+            @Value("${application.host.port:995}") final int hostPort,
+            @Value("${application.host.tls:true}") final boolean useTLS
+            ) {
         super();
         this.userName = userName;
         this.credentials = nonNull(credentials) ? ArrayUtils.clone(credentials.toCharArray())
                 /* cloning prevent concurrent zeroing */ : EMPTY_CHAR_ARRAY;
         this.hostName = hostName;
         this.hostPort = hostPort;
+        this.useTLS = useTLS;
         logger.info("Account { user: {}, host: { name: {}, port: {} } }", userName, hostName, hostPort);
         if (isBlank(hostName)) {
             logger.warn("Expected host name to be set but was not. Connecting may fail.");
@@ -89,7 +92,7 @@ class Account {
     }
 
     void perform(final IOperation operation) {
-        perform(new Client(), operation);
+        perform(new Client(useTLS), operation);
     }
 
     public void perform(final Client client, final IOperation operation) {

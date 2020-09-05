@@ -23,6 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+import org.apache.commons.net.pop3.POP3Client;
 import org.apache.commons.net.pop3.POP3MessageInfo;
 import org.apache.commons.net.pop3.POP3SClient;
 import org.slf4j.Logger;
@@ -41,15 +42,19 @@ class Client implements ISession {
 
     private final Logger logger = LoggerFactory.getLogger(Client.class);
 
-    private final POP3SClient pop3Client;
+    private final POP3Client pop3Client;
 
-    Client() {
-        this(new POP3SClient(true));
+    Client(boolean useTLS) {
+        this(useTLS ? new POP3SClient(true) : new POP3Client());
     }
 
-    Client(final POP3SClient client) {
+    Client(final POP3Client client) {
         this.pop3Client = client;
         client.addProtocolCommandListener(new LoggingProtocolCommandListener());
+    }
+
+    POP3Client getPop3Client() {
+        return pop3Client;
     }
 
     void logout() {
