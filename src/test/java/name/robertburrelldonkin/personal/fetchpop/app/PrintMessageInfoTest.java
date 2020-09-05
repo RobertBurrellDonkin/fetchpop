@@ -28,11 +28,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-
+import org.slf4j.Logger;
 import java.util.stream.Stream;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PrintMessageInfoTest {
@@ -42,10 +41,12 @@ public class PrintMessageInfoTest {
     private ISession mockSession;
     @Mock
     private Message mockMessage;
+    @Mock
+    private Logger mockLogger;
 
     @Before
     public void setUp() {
-        subject = new PrintMessageInfo();
+        subject = new PrintMessageInfo(mockLogger);
     }
 
     @Test
@@ -54,6 +55,6 @@ public class PrintMessageInfoTest {
 
         this.subject.operateOn(mockSession);
 
-        verify(this.mockMessage).logInfo();
+        verify(this.mockMessage).logInfo(mockLogger);
     }
 }

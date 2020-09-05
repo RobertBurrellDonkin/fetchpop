@@ -21,10 +21,24 @@ package name.robertburrelldonkin.personal.fetchpop.app;
     SOFTWARE.
 */
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 class PrintMessageInfo implements IOperation {
+
+    private final Logger logger;
+
+    PrintMessageInfo() {
+        this(LoggerFactory.getLogger(PrintMessageInfo.class));
+    }
+
+    PrintMessageInfo(Logger logger) {
+        this.logger = logger;
+    }
 
     @Override
     public void operateOn(ISession session) {
-        session.messages().forEach(Message::logInfo);
+        session.messages().forEach(message -> message.logInfo(logger));
     }
 }

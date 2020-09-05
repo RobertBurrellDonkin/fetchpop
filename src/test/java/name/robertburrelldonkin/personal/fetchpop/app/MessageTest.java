@@ -30,12 +30,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.slf4j.Logger;
 
 import java.io.Reader;
 import java.io.StringReader;
 
 import static name.robertburrelldonkin.personal.fetchpop.app.AlphaSequence.nextAlphanumeric;
 import static name.robertburrelldonkin.personal.fetchpop.app.NumberSequence.nextInt;
+import static name.robertburrelldonkin.personal.fetchpop.app.StandardOutput.STDOUT_MARKER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -68,6 +70,8 @@ public class MessageTest {
     private Reader reader;
     @Mock
     private ISession mockSession;
+    @Mock
+    private Logger mockLogger;
     private int someMessageNumber;
     private POP3MessageInfo someInfo;
 
@@ -138,5 +142,14 @@ public class MessageTest {
                         "Subject: Saying Hello",
                         "Message-ID: <1234@local.machine.example>"
                 );
+    }
+
+    @Test
+    public void logInfoShouldLogOutToStdOut() {
+        when(this.mockSession.retrieveMessage(someMessageNumber)).thenReturn(new StringReader(SAMPLE_EMAIL));
+
+        subject.logInfo(mockLogger);
+
+        verify(mockLogger).info(STDOUT_MARKER, "{}", "From: John Doe <jdoe@machine.example> Message-ID: <1234@local.machine.example> Subject: Saying Hello");
     }
 }

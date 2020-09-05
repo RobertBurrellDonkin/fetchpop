@@ -26,15 +26,19 @@ SOFTWARE.
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.net.pop3.POP3MessageInfo;
+import org.slf4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.Reader;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.lang.Character.isSpaceChar;
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableCollection;
+import static java.util.stream.Collectors.joining;
+import static name.robertburrelldonkin.personal.fetchpop.app.StandardOutput.STDOUT_MARKER;
 import static org.apache.commons.lang.StringUtils.substringBefore;
 import static org.apache.commons.lang.StringUtils.trim;
 
@@ -65,8 +69,8 @@ class Message {
         return "Message [" + info + "]";
     }
 
-    void logInfo() {
-        // TODO:
+    void logInfo(final Logger logger) {
+        logger.info(STDOUT_MARKER, "{}", info().sorted().collect(joining(" ")));
     }
 
     Stream<String> headerLines() {
