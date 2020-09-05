@@ -1,0 +1,7 @@
+application:
+  user: alice
+  cred: Rabbit
+  host:
+    name: localhost
+    port: 110
+    tls: false

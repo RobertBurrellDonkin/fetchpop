@@ -1,5 +1,4 @@
 package name.robertburrelldonkin.personal.fetchpop.app;
-
 /*
 MIT License
 
@@ -24,11 +23,38 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import org.apache.commons.lang.RandomStringUtils;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.slf4j.Logger;
+import java.util.stream.Stream;
 
-public class AlphaSequence {
+import static org.mockito.Mockito.*;
 
-    public static String nextAlphanumeric() {
-        return RandomStringUtils.randomAlphanumeric(6);
+@RunWith(MockitoJUnitRunner.class)
+public class PrintMessageInfoTest {
+
+    private PrintMessageInfo subject;
+    @Mock
+    private ISession mockSession;
+    @Mock
+    private Message mockMessage;
+    @Mock
+    private Logger mockLogger;
+
+    @Before
+    public void setUp() {
+        subject = new PrintMessageInfo(mockLogger);
+    }
+
+    @Test
+    public void operateOn() {
+        when(this.mockSession.messages()).thenReturn(Stream.of(mockMessage));
+
+        this.subject.operateOn(mockSession);
+
+        verify(this.mockMessage).logInfo(mockLogger);
     }
 }

@@ -22,15 +22,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.Reader;
-import java.net.SocketException;
-import java.util.Locale;
-import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -42,98 +33,103 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
+import java.io.*;
+import java.net.SocketException;
+import java.util.Locale;
+import java.util.UUID;
+
 public class Legacy {
 
-	public static void main(String[] args) {
-		SpringApplication.run(Legacy.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(Legacy.class, args);
+    }
 
-	private final String username = "USERNAME";
-	private final String password = "PASSWORD";
-	private final File dir = new File("DIRECTORY");
+    private final String username = "USERNAME";
+    private final String password = "PASSWORD";
+    private final File dir = new File("DIRECTORY");
 
-	public static final void printMessageInfo(BufferedReader reader, int id) throws IOException {
-		String from = "";
-		String subject = "";
-		String line;
-		while ((line = reader.readLine()) != null) {
-			String lower = line.toLowerCase(Locale.ENGLISH);
-			if (lower.startsWith("from: ")) {
-				from = line.substring(6).trim();
-			} else if (lower.startsWith("subject: ")) {
-				subject = line.substring(9).trim();
-			}
-		}
+    public static final void printMessageInfo(BufferedReader reader, int id) throws IOException {
+        String from = "";
+        String subject = "";
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String lower = line.toLowerCase(Locale.ENGLISH);
+            if (lower.startsWith("from: ")) {
+                from = line.substring(6).trim();
+            } else if (lower.startsWith("subject: ")) {
+                subject = line.substring(9).trim();
+            }
+        }
 
-		System.out.println(Integer.toString(id) + " From: " + from + "  Subject: " + subject);
-	}
+        System.out.println(id + " From: " + from + "  Subject: " + subject);
+    }
 
-	@Bean
-	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
-		return args -> {
-			FileUtils.forceMkdirParent(dir);
-			for (int i = 0; i < 80; i++) {
-				doOnce();
-			}
-		};
-	}
+    @Bean
+    public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
+        return args -> {
+            FileUtils.forceMkdirParent(dir);
+            for (int i = 0; i < 80; i++) {
+                doOnce();
+            }
+        };
+    }
 
-	private void doOnce() throws SocketException, IOException {
-		final POP3SClient client = new POP3SClient(true);
-		client.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out), true));
-		client.connect("SERVER", 995);
-		System.out.println("Connected");
-		try {
-			client.login(username, password);
-			try {
-				POP3MessageInfo status = client.status();
-				if (status == null) {
-					System.err.println("Could not retrieve status.");
-					client.logout();
-					client.disconnect();
-					return;
-				}
+    private void doOnce() throws IOException {
+        final POP3SClient client = new POP3SClient(true);
+        client.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out), true));
+        client.connect("SERVER", 995);
+        System.out.println("Connected");
+        try {
+            client.login(username, password);
+            try {
+                POP3MessageInfo status = client.status();
+                if (status == null) {
+                    System.err.println("Could not retrieve status.");
+                    client.logout();
+                    client.disconnect();
+                    return;
+                }
 
-				POP3MessageInfo[] messages = client.listMessages();
+                POP3MessageInfo[] messages = client.listMessages();
 
-				if (messages == null) {
-					System.err.println("Could not retrieve message list.");
-					client.logout();
-					client.disconnect();
-					return;
-				} else if (messages.length == 0) {
-					System.out.println("No messages");
-					client.logout();
-					client.disconnect();
-					return;
-				}
+                if (messages == null) {
+                    System.err.println("Could not retrieve message list.");
+                    client.logout();
+                    client.disconnect();
+                    return;
+                } else if (messages.length == 0) {
+                    System.out.println("No messages");
+                    client.logout();
+                    client.disconnect();
+                    return;
+                }
 
-				System.out.println("Message count: " + messages.length);
-				System.out.println("Status: " + status);
+                System.out.println("Message count: " + messages.length);
+                System.out.println("Status: " + status);
 
-				for (int i = 1; i < 100; i++) {
-					printMessage(client, i);
-					System.out.println(
-							(client.deleteMessage(i) ? "Successfully deleted" : "Failed to delete") + " message #" + i);
-				}
+                for (int i = 1; i < 100; i++) {
+                    printMessage(client, i);
+                    System.out.println(
+                            (client.deleteMessage(i) ? "Successfully deleted" : "Failed to delete") + " message #" + i);
+                }
 
-			} finally {
-				client.logout();
-			}
-		} finally {
-			client.disconnect();
-		}
-	}
+            } finally {
+                client.logout();
+            }
+        } finally {
+            client.disconnect();
+        }
+    }
 
-	private void printMessage(final POP3SClient client, final int messageId) throws IOException {
-		final File file = new File(dir, UUID.randomUUID().toString() + ".msg");
-		final FileWriter outputStreamWriter = new FileWriter(file);
-		final Reader inboundMessageStream = client.retrieveMessage(messageId);
-		long copied = IOUtils.copyLarge(inboundMessageStream, outputStreamWriter);
-		outputStreamWriter.flush();
-		inboundMessageStream.close();
-		System.out.println("---------------------------------------------------------");
-		System.out.println("Copied " + copied + " bytes to " + file);
-	}
+    private void printMessage(final POP3SClient client, final int messageId) throws IOException {
+        final File file = new File(dir, UUID.randomUUID().toString() + ".msg");
+        final FileWriter outputStreamWriter = new FileWriter(file);
+        final Reader inboundMessageStream = client.retrieveMessage(messageId);
+        long copied = IOUtils.copyLarge(inboundMessageStream, outputStreamWriter);
+        outputStreamWriter.flush();
+        inboundMessageStream.close();
+        System.out.println("---------------------------------------------------------");
+        System.out.println("Copied " + copied + " bytes to " + file);
+    }
 
 }

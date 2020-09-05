@@ -67,6 +67,75 @@ Implemented using <a href='https://logback.qos.ch/' rel='tag'>Logback</a> marker
 
 Apache Commons Net supports listening for low level communications. These messages are printed to the special logger named "protocol". 
 
+## <a href='https://github.com/RobertBurrellDonkin/fetchpop/issues/30'>GH-30</a> Plain Text
+
+To enable smoke testing and edge cases, setting `application.host.tls` to false will force plain 
+text connection.
+
+```
+application:
+  user: alice
+  cred: Rabbit
+  host:
+    name: localhost
+    port: 110
+    tls: false
+```
+
+
+## <a href='https://github.com/RobertBurrellDonkin/fetchpop/issues/29'>GH-29</a> Docker Smoke Container
+
+It's often inconvenient to play around against a live email server. The container in the `smoke` directory
+describes a docker image that runs a `POP3` server with user `alice` password `rabbit` and some sample emails. 
+
+To build and run this server:
+
+```
+$ cd smoke
+$ docker build -t pop3server .
+$ docker run -p110:110 pop3server
+```
+To connect, use 
+
+```
+application:
+  user: alice
+  cred: Rabbit
+  host:
+    name: localhost
+    port: 110
+    tls: false
+```
+
+A profile has been set up called `smoke` which allows Status (for example) to be run as follows:
+
+```mvn spring-boot:run -Dspring-boot.run.profiles=smoke,debug -Dspring-boot.run.arguments=Status```
+
+## <a href='https://github.com/RobertBurrellDonkin/fetchpop/issues/29'>GH-29</a> Print Message Info
+
+This fetches header information for messages and prints key headers to standard output.
+
+**Sample Use Cases**
+ * Assess the contents of a mailbox before archiving 
+
+For example
+
+```
+mvn spring-boot:run -Dspring-boot.run.profiles=smoke,quiet -Dspring-boot.run.arguments=Info
+```
+
+might output
+
+```
+From: John Doe <jdoe@machine.example> Message-ID: <1234@local.machine.example> Subject: Saying Hello
+From: "Joe Q. Public" <john.q.public@example.com> Message-ID: <5678.21-Nov-1997@example.com>
+From: Pete <pete@silly.example> Message-ID: <testabcd.1234@silly.example>
+From: Mary Smith <mary@example.net> Message-ID: <3456@example.net> Subject: Re: Saying Hello
+```
+
+
+
+
 ## Key Technologies
 
 * <a href='https://commons.apache.org/proper/commons-net/' rel='tag'>Apache Commons Net</a> 
@@ -103,6 +172,11 @@ java -jar -Dspring.profiles.active="account" fetchpop-app-0.0.1-SNAPSHOT.jar
 ## Features And Fixes
 
 Just pre-releases for personal use.
+
+### Next Release
+ *  GH-28: Print Message Info 
+ *  GH-29: Docker POP3 smoke server
+ *  GH-30: Allow plain connections through configuration
 
 ### 0.0.3
 

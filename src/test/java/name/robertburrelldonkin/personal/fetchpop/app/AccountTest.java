@@ -23,17 +23,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-import static name.robertburrelldonkin.personal.fetchpop.app.AlphaSequence.nextAlphanumeric;
-import static name.robertburrelldonkin.personal.fetchpop.app.NumberSequence.nextPositiveInt;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.assertThat;
-import static org.mockito.hamcrest.MockitoHamcrest.argThat;
-import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.when;
-
-import java.io.IOException;
-import java.net.SocketException;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -43,6 +32,18 @@ import org.junit.runner.RunWith;
 import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+
+import java.io.IOException;
+import java.net.SocketException;
+
+import static name.robertburrelldonkin.personal.fetchpop.app.AlphaSequence.nextAlphanumeric;
+import static name.robertburrelldonkin.personal.fetchpop.app.NumberSequence.nextPositiveInt;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.when;
+import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AccountTest {
@@ -68,58 +69,58 @@ public class AccountTest {
         hostName = nextAlphanumeric();
         hostPort = nextPositiveInt();
 
-        subject = new Account(userName, credentials, hostName, hostPort);
+        subject = new Account(userName, credentials, hostName, hostPort, true);
 
         when(mockClient.verify()).thenReturn(mockClient);
     }
 
     @Test
     public void whenAllSetThenAccountIsNotEmpty() {
-        assertThat(new Account(userName, credentials, hostName, hostPort).isEmpty(), is(false));
+        assertThat(new Account(userName, credentials, hostName, hostPort, true).isEmpty(), is(false));
     }
 
     @Test
     public void whenUserIsEmptyStringThenAccountIsEmpty() {
-        assertThat(new Account("", credentials, hostName, hostPort).isEmpty(), is(true));
+        assertThat(new Account("", credentials, hostName, hostPort, true).isEmpty(), is(true));
     }
 
     @Test
     public void whenUserIsNullThenAccountIsEmpty() {
-        assertThat(new Account(null, credentials, hostName, hostPort).isEmpty(), is(true));
+        assertThat(new Account(null, credentials, hostName, hostPort, true).isEmpty(), is(true));
     }
 
     @Test
     public void whenCredIsEmptyStringThenAccountIsEmpty() {
-        assertThat(new Account(userName, "", hostName, hostPort).isEmpty(), is(true));
+        assertThat(new Account(userName, "", hostName, hostPort, true).isEmpty(), is(true));
     }
 
     @Test
     public void whenCredIsNullThenAccountIsEmpty() {
-        assertThat(new Account(userName, null, hostName, hostPort).isEmpty(), is(true));
+        assertThat(new Account(userName, null, hostName, hostPort, true).isEmpty(), is(true));
     }
 
     @Test
     public void whenHostNameIsEmptyStringThenAccountIsEmpty() {
-        assertThat(new Account(userName, credentials, "", hostPort).isEmpty(), is(true));
+        assertThat(new Account(userName, credentials, "", hostPort, true).isEmpty(), is(true));
     }
 
     @Test
     public void whenHostNameIsNullThenAccountIsEmpty() {
-        assertThat(new Account(userName, credentials, null, hostPort).isEmpty(), is(true));
+        assertThat(new Account(userName, credentials, null, hostPort, true).isEmpty(), is(true));
     }
 
     @Test
     public void whenHostPortIsZeroThenAccountIsEmpty() {
-        assertThat(new Account(userName, credentials, hostName, 0).isEmpty(), is(true));
+        assertThat(new Account(userName, credentials, hostName, 0, true).isEmpty(), is(true));
     }
 
     @Test
     public void whenHostPortIsNegativeThenAccountIsEmpty() {
-        assertThat(new Account(userName, credentials, hostName, -1).isEmpty(), is(true));
+        assertThat(new Account(userName, credentials, hostName, -1, true).isEmpty(), is(true));
     }
 
     @Test
-    public void performShouldConnectLoginStatusOperationLogoutDisconnect() throws SocketException, IOException {
+    public void performShouldConnectLoginStatusOperationLogoutDisconnect() throws IOException {
 
         this.subject.perform(mockClient, mockOperation);
 
