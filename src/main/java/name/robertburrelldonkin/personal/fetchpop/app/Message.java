@@ -30,8 +30,9 @@ import org.slf4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.Reader;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static java.lang.Character.isSpaceChar;
@@ -67,6 +68,10 @@ class Message {
     @Override
     public String toString() {
         return "Message [" + info + "]";
+    }
+
+    int getNumber() {
+        return info.number;
     }
 
     void logInfo(final Logger logger) {

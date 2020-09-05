@@ -36,7 +36,7 @@ class OperationFactory {
     private static final String INFO_OP_NAME = "info";
 
     static IOperation nameToOperation(final String name) {
-        switch(name.toLowerCase()) {
+        switch (name.toLowerCase()) {
             case INFO_OP_NAME:
                 return new PrintMessageInfo();
             case STATUS_OP_NAME:

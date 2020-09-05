@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.stream.Stream;
 
+import static java.util.Arrays.stream;
 import static java.util.Objects.isNull;
 
 /**
@@ -125,6 +126,11 @@ class Client implements ISession {
 
     @Override
     public Stream<Message> messages() {
-        return null;
+        try {
+            return stream(pop3Client.listMessages())
+                    .map(i -> new Message(i, this));
+        } catch (IOException e) {
+            throw new FatalNestedRuntimeException.ListMessagesException(e);
+        }
     }
 }

@@ -23,9 +23,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
+import static java.util.stream.Collectors.toList;
 import static name.robertburrelldonkin.personal.fetchpop.app.AlphaSequence.nextAlphanumeric;
 import static name.robertburrelldonkin.personal.fetchpop.app.NumberSequence.nextInt;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
@@ -34,6 +36,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.net.SocketException;
 
+import org.apache.commons.net.pop3.POP3MessageInfo;
 import org.apache.commons.net.pop3.POP3SClient;
 /*
 MIT License
@@ -74,11 +77,15 @@ public class ClientSessionTest {
     @Mock
     private POP3SClient mockClient;
 
+    private POP3MessageInfo pop3MessageInfo;
+    private POP3MessageInfo[] messages;
+
     private int someMessageNumber;
     private String userName;
     private String credentials;
     private String hostName;
     private int hostPort;
+    private int messageNumber;
 
     @Mock
     private Reader mockReader;
@@ -91,8 +98,14 @@ public class ClientSessionTest {
         credentials = nextAlphanumeric();
         hostName = nextAlphanumeric();
         hostPort = nextInt();
+        messageNumber = nextInt();
 
         someMessageNumber = nextInt();
+
+        pop3MessageInfo = new POP3MessageInfo();
+        pop3MessageInfo.number = someMessageNumber;
+        messages = new POP3MessageInfo[]{pop3MessageInfo};
+
         subject = new Client(mockClient);
     }
 
@@ -154,4 +167,21 @@ public class ClientSessionTest {
         this.subject.retrieveMessage(someMessageNumber);
 
     }
+
+    @Test
+    public void messagesShouldListMessages() throws Exception {
+        when(mockClient.listMessages()).thenReturn(messages);
+
+        assertThat(this.subject.messages().map(Message::getNumber).collect(toList()), contains(someMessageNumber));
+    }
+
+    @Test
+    public void whenListMessagesFailsThenThrowException() throws IOException {
+        when(mockClient.listMessages()).thenThrow(new IOException());
+        thrown.expect(FatalNestedRuntimeException.ListMessagesException.class);
+
+        this.subject.messages();
+
+    }
+
 }

@@ -1,8 +1,8 @@
 package name.robertburrelldonkin.personal.fetchpop.app;
 
-import static name.robertburrelldonkin.personal.fetchpop.app.StandardOutput.STDOUT_MARKER;
-
 import org.slf4j.Logger;
+
+import static name.robertburrelldonkin.personal.fetchpop.app.StandardOutput.STDOUT_MARKER;
 
 /*
 MIT License

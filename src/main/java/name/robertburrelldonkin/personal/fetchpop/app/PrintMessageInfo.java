@@ -39,6 +39,8 @@ class PrintMessageInfo implements IOperation {
 
     @Override
     public void operateOn(ISession session) {
-        session.messages().forEach(message -> message.logInfo(logger));
+        session
+                .messages()
+                .forEach(message -> message.logInfo(logger));
     }
 }

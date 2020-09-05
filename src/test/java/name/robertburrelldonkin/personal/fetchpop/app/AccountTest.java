@@ -23,17 +23,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-import static name.robertburrelldonkin.personal.fetchpop.app.AlphaSequence.nextAlphanumeric;
-import static name.robertburrelldonkin.personal.fetchpop.app.NumberSequence.nextPositiveInt;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.assertThat;
-import static org.mockito.hamcrest.MockitoHamcrest.argThat;
-import static org.mockito.Mockito.inOrder;
-import static org.mockito.Mockito.when;
-
-import java.io.IOException;
-import java.net.SocketException;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -43,6 +32,18 @@ import org.junit.runner.RunWith;
 import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+
+import java.io.IOException;
+import java.net.SocketException;
+
+import static name.robertburrelldonkin.personal.fetchpop.app.AlphaSequence.nextAlphanumeric;
+import static name.robertburrelldonkin.personal.fetchpop.app.NumberSequence.nextPositiveInt;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.when;
+import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AccountTest {
@@ -119,7 +120,7 @@ public class AccountTest {
     }
 
     @Test
-    public void performShouldConnectLoginStatusOperationLogoutDisconnect() throws SocketException, IOException {
+    public void performShouldConnectLoginStatusOperationLogoutDisconnect() throws IOException {
 
         this.subject.perform(mockClient, mockOperation);
 
