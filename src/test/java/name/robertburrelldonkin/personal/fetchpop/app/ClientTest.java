@@ -23,11 +23,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.hamcrest.MockitoHamcrest.argThat;
 import static org.mockito.Mockito.verify;
 
+import org.apache.commons.net.pop3.POP3Client;
 import org.apache.commons.net.pop3.POP3SClient;
 import org.junit.Before;
 import org.junit.Test;
@@ -51,5 +53,15 @@ public class ClientTest {
     @Test
     public void listenerAddedOnConstruction() {
         verify(this.mockPop3).addProtocolCommandListener(argThat(is(instanceOf(LoggingProtocolCommandListener.class))));
+    }
+
+    @Test
+    public void useTLS() {
+        assertThat(new Client(true).getPop3Client()).isInstanceOf(POP3SClient.class);
+    }
+
+    @Test
+    public void usePlain() {
+        assertThat(new Client(false).getPop3Client()).isExactlyInstanceOf(POP3Client.class);
     }
 }
