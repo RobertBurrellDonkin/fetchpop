@@ -23,7 +23,7 @@
 #
 
 logging:
- level:
-  org: debug
-  org.springframework: debug
-  name.robertburrelldonkin: debug
+  level:
+    org: debug
+    org.springframework: debug
+    name.robertburrelldonkin: debug
