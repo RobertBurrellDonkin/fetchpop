@@ -174,6 +174,8 @@ java -jar -Dspring.profiles.active="account" fetchpop-app-0.0.1-SNAPSHOT.jar
 Just pre-releases for personal use.
 
 ### Next Release
+
+### 0.0.4
  *  GH-28: Print Message Info 
  *  GH-29: Docker POP3 smoke server
  *  GH-30: Allow plain connections through configuration
