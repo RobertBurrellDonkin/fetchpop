@@ -134,6 +134,9 @@ From: Mary Smith <mary@example.net> Message-ID: <3456@example.net> Subject: Re: 
 ```
 
 
+## <a href='https://github.com/RobertBurrellDonkin/fetchpop/issues/35'>GH-35</a>  Bump Dependencies
+
+Upgrade dependencies including spring boot to `2.3.4` and Java to LTS `11`
 
 
 ## Key Technologies
@@ -174,6 +177,7 @@ java -jar -Dspring.profiles.active="account" fetchpop-app-0.0.1-SNAPSHOT.jar
 Just pre-releases for personal use.
 
 ### Next Release
+ *  GH-35: Upgrade dependencies
 
 ### 0.0.4
  *  GH-28: Print Message Info 
