@@ -23,9 +23,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import static name.robertburrelldonkin.personal.fetchpop.app.AlphaSequence.nextAlphanumeric;
-import static org.mockito.Mockito.verify;
-
 import org.apache.commons.net.ProtocolCommandEvent;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,6 +30,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.slf4j.Logger;
+
+import static name.robertburrelldonkin.personal.fetchpop.app.AlphaSequence.nextAlphanumeric;
+import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LoggingProtocolCommandListenerTest {

@@ -23,10 +23,10 @@
 #
 
 logging:
- level:
-  org.apache: info
-  org.springframework: info
-  
+  level:
+    org.apache: info
+    org.springframework: info
+
 spring:
-    main:
-        banner-mode: "off"
+  main:
+    banner-mode: "off"

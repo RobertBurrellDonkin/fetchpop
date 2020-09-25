@@ -23,9 +23,9 @@
 #
 
 logging:
- level:
-  org.apache: debug
-  org.springframework: info
+  level:
+    org.apache: debug
+    org.springframework: info
 spring:
- main:
-  web-application-type: none
+  main:
+    web-application-type: none

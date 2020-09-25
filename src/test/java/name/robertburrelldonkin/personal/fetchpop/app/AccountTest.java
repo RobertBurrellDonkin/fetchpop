@@ -34,7 +34,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.io.IOException;
-import java.net.SocketException;
 
 import static name.robertburrelldonkin.personal.fetchpop.app.AlphaSequence.nextAlphanumeric;
 import static name.robertburrelldonkin.personal.fetchpop.app.NumberSequence.nextPositiveInt;

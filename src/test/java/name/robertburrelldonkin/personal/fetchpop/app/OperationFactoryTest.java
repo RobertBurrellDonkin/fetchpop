@@ -3,8 +3,6 @@ package name.robertburrelldonkin.personal.fetchpop.app;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.core.IsInstanceOf.instanceOf;
 
 class OperationFactoryTest {
 

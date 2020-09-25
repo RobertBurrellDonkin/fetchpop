@@ -34,7 +34,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 import java.io.*;
-import java.net.SocketException;
 import java.util.Locale;
 import java.util.UUID;
 
